@@ -66,11 +66,14 @@ $route['categories/edit']['GET'] = 'categories/edit';
 $route['categories/update']['POST'] = 'categories/update';
 
 // PRODUCTS
-$route['users']['GET'] = 'users';
-$route['users/datatable']['GET'] = 'users/datatable';
-$route['users/save']['POST'] = 'users/save';
-$route['users/edit']['GET'] = 'users/edit';
-$route['users/update']['POST'] = 'users/update';
+$route['products']['GET'] = 'products';
+$route['products/datatable']['GET'] = 'products/datatable';
+$route['products/save']['POST'] = 'products/save';
+$route['products/edit']['GET'] = 'products/edit';
+$route['products/update']['POST'] = 'products/update';
+
+// FRONTEND
+$route['shop']['GET'] = 'shop';
 
 $route['default_controller'] = 'welcome';
 $route['404_override'] = '';

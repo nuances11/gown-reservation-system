@@ -398,8 +398,10 @@ $(document).ready(function() {
                                 productsDataTable.ajax.reload(); // Reload Users DataTable
                             }else{
                                 if (response.validation_errors) {
-                                    console.log(response.validation_errors);
                                     toastr.error(response.validation_errors);
+                                    if (response.product_image) {
+                                        toastr.error(response.product_image);
+                                    }
                                 }else{
                                     toastr.error(response.message);
                                 }

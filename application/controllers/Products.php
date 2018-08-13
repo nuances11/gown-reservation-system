@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class PRoducts extends CI_Controller {
+class Products extends CI_Controller {
 
 	function __construct(){
 	    parent::__construct();
@@ -109,6 +109,10 @@ class PRoducts extends CI_Controller {
     {
         $response = array();
 
+        if ($_FILES['product_img']['size'] == 0 && $_FILES['product_img']['error'] == 4) {
+            $response['product_image'] = 'Product Image Required';
+        }
+        
         $this->form_validation->set_rules('name','Name', 'required|is_unique[products.name]');
         $this->form_validation->set_rules('price','Price', 'required|numeric');
         $this->form_validation->set_rules('category','Category', 'required|numeric');
