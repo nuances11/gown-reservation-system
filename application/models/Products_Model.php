@@ -35,6 +35,19 @@ class Products_Model extends CI_Model
         return $this->db->update('products', $data);
     }
 
+    function getAllProducts()
+    {
+        $this->db->select('p.*, c.name as cat_name, c.id as cat_id')
+                ->from('products as p')
+                ->join('categories as c', 'c.id = p.category_id')
+                ->where('p.is_available', 1);
+        $query = $this->db->get();
+        if($query->num_rows()){
+            return $query->result();
+        }
+        return [];
+    }
+
 }
 
 ?>
