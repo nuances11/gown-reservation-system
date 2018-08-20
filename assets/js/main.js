@@ -201,13 +201,13 @@
     /*-------------------------------------
      Select2 activation code
      -------------------------------------*/
-    if ($('#checkout-form select.select2').length) {
+    /*if ($('#checkout-form select.select2').length) {
         $('#checkout-form select.select2').select2({
             theme: 'classic',
             dropdownAutoWidth: true,
             width: '100%'
         });
-    }
+    }&/
 
     /*-------------------------------------
      Sidebar Menu activation code

@@ -261,18 +261,39 @@ class Products extends CI_Controller {
 
             $file_name = '';
 
+            $target_dir = "uploads/img/products/";
+            $file_name = basename($_FILES["product_img"]["name"]);
+            $target_file = $target_dir . basename($_FILES["product_img"]["name"]);
+            $uploadOk = 1;
+            $imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
+
             if ($_FILES['product_img']['size'] == 0 && $_FILES['product_img']['error'] == 4)
             {
                 $file_name = $this->input->post('image_file');
 
+                $data = array(
+                    'name' => $this->input->post('name'),
+                    'image' => $file_name,
+                    'price' => $this->input->post('price'),
+                    'category_id' => $this->input->post('category'),
+                    'description' => $this->input->post('description'),
+                    'quantity' => $this->input->post('quantity'),
+                    'is_featured' => $this->input->post('is_featured'),
+                    'is_best' => $this->input->post('is_best'),
+                    'is_available' => $this->input->post('is_available'),
+                );
+    
+                $res = $this->products_model->updateProduct($id, $data);
+                if ($res) {
+                    $response['message'] = 'Product Updated Successfully';
+                    $response['success'] = TRUE;
+                }else{
+                    $response['message'] = 'Error on updating produt';
+                    $response['success'] = FALSE;
+                }
+
+                
             }else{
-
-                $target_dir = "uploads/img/products/";
-                $file_name = basename($_FILES["product_img"]["name"]);
-                $target_file = $target_dir . basename($_FILES["product_img"]["name"]);
-                $uploadOk = 1;
-                $imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
-
                 // Check if image file is a actual image or fake image
                 $check = getimagesize($_FILES["product_img"]["tmp_name"]);
                 if($check !== false) {
@@ -301,7 +322,7 @@ class Products extends CI_Controller {
                     $response['upload'] = "Sorry, your file was not uploaded.";
                 // if everything is ok, try to upload file
                 }else{
-                    
+        
                     if (move_uploaded_file($_FILES["product_img"]["tmp_name"], $target_file)) {
 
                         $data = array(
@@ -327,11 +348,13 @@ class Products extends CI_Controller {
 
                     }else{
                         $response['upload_error'] = "Sorry, there was an error uploading your file.";
-                    }
-                    
+                    }   
                 }
+            }      
+            
+            
 
-            }
+            
             
             
         }

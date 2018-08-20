@@ -78,7 +78,7 @@
                                                             <div class="media">
                                                                 <div class="pull-left cart-product-img">
                                                                     <a href="#">
-                                                                        <img class="img-responsive" alt="product" src="img/best-seller/4.jpg">
+                                                                        <img class="img-responsive" alt="product" src="">
                                                                     </a>
                                                                 </div>
                                                                 <div class="media-body cart-content">
@@ -106,7 +106,7 @@
                                                             <div class="media">
                                                                 <div class="pull-left cart-product-img">
                                                                     <a href="#">
-                                                                        <img class="img-responsive" alt="product" src="img/best-seller/5.jpg">
+                                                                        <img class="img-responsive" alt="product" src="">
                                                                     </a>
                                                                 </div>
                                                                 <div class="media-body cart-content">
@@ -241,7 +241,8 @@
         <!-- Header Area End Here -->
         <!-- Inner Page Banner Area End Here -->
         <!-- Shop Page Area Start Here -->
-        <div class="shop-page-area">
+        <pre></pre>
+        <div class="checkout-page-area">
             <?php echo $content ;?>
         </div>
         <!-- Shop Page Area End Here -->

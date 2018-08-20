@@ -48,6 +48,11 @@ class Products_Model extends CI_Model
         return [];
     }
 
+    public function record_count()
+    {
+        return $this->db->count_all("products");
+    }
+
 }
 
 ?>

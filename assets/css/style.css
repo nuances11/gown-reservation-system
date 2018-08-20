@@ -3392,7 +3392,7 @@ ul {
 6. About Us Page Area styles
 ========================================*/
 .about-us-page-area {
-  padding: 115px 0 93px;
+  padding: 50px 0 93px;
 }
 @media (min-width: 768px) and (max-width: 991px) {
   .about-us-page-area {
@@ -6237,7 +6237,7 @@ ul {
 19.1 Shop Common styles 
 ---------------------------------------*/
 .shop-page-area {
-  padding: 100px 0;
+  padding: 0 0;
 }
 @media (min-width: 768px) and (max-width: 991px) {
   .shop-page-area {
@@ -7140,7 +7140,7 @@ ul {
 20.1 Product Details1 Page Area styles
 ----------------------------------------*/
 .product-details1-area {
-  padding: 100px 0 93px;
+  padding: 0 0 93px;
 }
 @media (min-width: 768px) and (max-width: 991px) {
   .product-details1-area {
@@ -8324,7 +8324,7 @@ ul {
 23. Checkout Page Area styles
 ========================================*/
 .checkout-page-area {
-  padding: 100px 0;
+  padding: 50px 0;
 }
 @media (min-width: 768px) and (max-width: 991px) {
   .checkout-page-area {
@@ -8525,7 +8525,7 @@ ul {
 24. Cart Page Area styles
 ========================================*/
 .cart-page-area {
-  padding: 100px 0;
+  padding: 50px 0;
 }
 @media (min-width: 768px) and (max-width: 991px) {
   .cart-page-area {
@@ -8744,7 +8744,7 @@ ul {
 25. Order History Page Area styles
 ========================================*/
 .order-history-page-area {
-  padding: 100px 0;
+  padding: 50px 0;
 }
 @media (min-width: 768px) and (max-width: 991px) {
   .order-history-page-area {
@@ -8822,7 +8822,7 @@ ul {
 26. Order Details Page Area styles
 ========================================*/
 .order-details-page-area {
-  padding: 90px 0 100px;
+  padding: 50px 0 100px;
 }
 @media (min-width: 768px) and (max-width: 991px) {
   .order-details-page-area {
@@ -9189,7 +9189,7 @@ ul {
 28. Contact Page Area styles 
 ========================================*/
 .contact-us-page-area {
-  padding: 100px 0 80px;
+  padding: 50px 0 80px;
 }
 @media (min-width: 768px) and (max-width: 991px) {
   .contact-us-page-area {
