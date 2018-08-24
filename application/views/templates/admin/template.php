@@ -121,7 +121,7 @@
 						</a>
 					</li>
 					<li>
-						<a href="#">
+						<a href="<?php echo BASE_URL() ;?>packages">
 							<i class="fa fa-gift"></i>
 							<span>Packages</span>
 							<span class="pull-right-container">

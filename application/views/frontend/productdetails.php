@@ -15,24 +15,7 @@
                                                 <div class="tab-pane fade active in" id="related1">
                                                     <a href="#" class="zoom ex1"><img alt="single" src="<?php echo base_url(); ?>assets/img/product-details1.jpg" class="img-responsive"></a>
                                                 </div>
-                                                <div class="tab-pane fade" id="related2">
-                                                    <a href="#" class="zoom ex1"><img alt="single" src="<?php echo base_url(); ?>assets/img/product-details1.jpg" class="img-responsive"></a>
-                                                </div>
-                                                <div class="tab-pane fade" id="related3">
-                                                    <a href="#" class="zoom ex1"><img alt="single" src="<?php echo base_url(); ?>assets/img/product-details1.jpg" class="img-responsive"></a>
-                                                </div>
                                             </div>
-                                            <ul>
-                                                <li class="active">
-                                                    <a href="#related1" data-toggle="tab" aria-expanded="false"><img alt="related1" src="<?php echo base_url(); ?>assets/img/product-details4.jpg" class="img-responsive"></a>
-                                                </li>
-                                                <li>
-                                                    <a href="#related2" data-toggle="tab" aria-expanded="false"><img alt="related2" src="<?php echo base_url(); ?>assets/img/product-details4.jpg" class="img-responsive"></a>
-                                                </li>
-                                                <li>
-                                                    <a href="#related3" data-toggle="tab" aria-expanded="false"><img alt="related3" src="<?php echo base_url(); ?>assets/img/product-details4.jpg" class="img-responsive"></a>
-                                                </li>
-                                            </ul>
                                         </div>
                                     </div>
                                     <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">

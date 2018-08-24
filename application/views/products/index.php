@@ -54,29 +54,25 @@
 							</select>
 						</div>
 						<div class="form-group">
-							<label for="quantity">Quantity</label>
-							<input class="form-control" placeholder="Enter quantity" name="quantity" type="number">
+							<label>Size</label>
+							<select class="form-control" name="size">
+								<option value="">Select Size</option>
+								<?php foreach($sizes as $size):  ?>
+									<option value="<?= $size->id ?>"><?= $size->size ?></option>
+								<?php endforeach; ?>
+							</select>
 						</div>
+						<div class="form-group">
+							<label for="price">Quantity</label>
+							<input class="form-control" placeholder="0" name="qty" type="number">
+						</div>
+						
 						
 						<div class="form-group">
 							<label>Description</label>
 							<textarea class="form-control" name="description" rows="3" placeholder="Enter ..."></textarea>
 						</div>
 						<div class="form-group">
-							<div class="checkbox">
-								<label>
-									<input type="checkbox" name="is_featured" value="1">
-									Is Featured
-								</label>
-							</div>
-
-							<div class="checkbox">
-								<label>
-								<input type="checkbox" name="is_best" value="1">
-									Is Best Product
-								</label>
-							</div>
-
 							<div class="checkbox">
 								<label>
 									<input type="checkbox" name="is_available" value="1">
@@ -127,8 +123,17 @@
 							</select>
 						</div>
 						<div class="form-group">
-							<label for="quantity">Quantity</label>
-							<input class="form-control" placeholder="Enter quantity" name="quantity" type="number">
+							<label>Size</label>
+							<select class="form-control" name="size">
+								<option value="">Select Size</option>
+								<?php foreach($sizes as $size):  ?>
+									<option value="<?= $size->id ?>"><?= $size->size ?></option>
+								<?php endforeach; ?>
+							</select>
+						</div>
+						<div class="form-group">
+							<label for="price">Quantity</label>
+							<input class="form-control" placeholder="0" name="qty" type="number">
 						</div>
 						
 						<div class="form-group">
@@ -136,20 +141,6 @@
 							<textarea class="form-control" name="description" rows="3" placeholder="Enter ..."></textarea>
 						</div>
 						<div class="form-group">
-							<div class="checkbox">
-								<label>
-									<input type="checkbox" name="is_featured" value="1">
-									Is Featured
-								</label>
-							</div>
-
-							<div class="checkbox">
-								<label>
-								<input type="checkbox" name="is_best" value="1">
-									Is Best Product
-								</label>
-							</div>
-
 							<div class="checkbox">
 								<label>
 									<input type="checkbox" name="is_available" value="1">
@@ -181,7 +172,7 @@
 								<th width="10%">ID</th>
 								<th>Name</th>
                                 <th>Category</th>
-								<th width="10%">Qty</th>
+								<th width="10%">Created</th>
                                 <th>Status</th>
 								<th width="20%"></th>
 							</tr>
@@ -193,9 +184,7 @@
 				<!-- /.box-body -->
 			</div>
 			<!-- /.user table -->
-		</div>
-
-		
+		</div>		
 	</div>
 </section>
 <!-- /.content -->

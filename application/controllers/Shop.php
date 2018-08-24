@@ -36,12 +36,15 @@ class Shop extends CI_Controller {
         $this->template->load('shop/index');
 	}
 
-	public function product()
+	public function product($id)
 	{
 		$this->template->set_template('checkout');
 		$this->template->load_sub('categories', $this->categories_model->getAllCategories());
 		
-		$this->template->set_title('Product Details - Casa Moda');
+		$product = $this->products_model->getProductInfo($id);
+		
+		$this->template->set_title($product->name . ' - Casa Moda');
+		$this->template->load_sub('product', $product);
 		$this->template->load('frontend/productdetails');
 	}
 

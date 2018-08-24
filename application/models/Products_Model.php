@@ -9,6 +9,9 @@ class Products_Model extends CI_Model
 
     public function getProducts()
     {
+        $this->db->select('p.*, c.name as catname')
+                ->from('products as p')
+                ->join('categories as c', 'c.id = p.category_id');
         return $this->db->get("products");
     }
 
@@ -19,9 +22,10 @@ class Products_Model extends CI_Model
 
     function getProductInfo($id)
     {
-        $this->db->select('*')
-                ->from('products')
-                ->where('id', $id);
+        $this->db->select('p.*, c.name as catname')
+                ->from('products as p')
+                ->join('categories as c', 'c.id = p.category_id')
+                ->where('p.id', $id);
         $query = $this->db->get();
         if($query->num_rows()){
             return $query->row();
@@ -51,6 +55,17 @@ class Products_Model extends CI_Model
     public function record_count()
     {
         return $this->db->count_all("products");
+    }
+
+    public function getSizes()
+    {
+        $this->db->select('*')
+                ->from('size');
+        $query = $this->db->get();
+        if($query->num_rows()){
+            return $query->result();
+        }
+        return [];
     }
 
 }

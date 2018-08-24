@@ -72,6 +72,13 @@ $route['products/save']['POST'] = 'products/save';
 $route['products/edit']['GET'] = 'products/edit';
 $route['products/update']['POST'] = 'products/update';
 
+// PACKAGES
+$route['packages']['GET'] = 'packages';
+$route['packages/datatable']['GET'] = 'packages/datatable';
+$route['packages/save']['POST'] = 'packages/save';
+$route['packages/edit']['GET'] = 'packages/edit';
+$route['packages/update']['POST'] = 'packages/update';
+
 
 // FRONTEND
 $route['shop/contact']['GET'] = 'contact';
@@ -80,7 +87,7 @@ $route['shop/cart']['GET'] = 'shop/cart';
 $route['shop/order']['GET'] = 'shop/order';
 $route['shop/orderhistory']['GET'] = 'shop/orderhistory';
 $route['shop/checkout']['GET'] = 'shop/checkout';
-$route['shop/product']['GET'] = 'shop/product';
+$route['shop/product/(:num)']['GET'] = 'shop/product/$1';
 $route['shop']['GET'] = 'shop';
 
 $route['default_controller'] = 'welcome';

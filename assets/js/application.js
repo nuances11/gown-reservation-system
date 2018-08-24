@@ -21,6 +21,13 @@ $(document).ready(function() {
         },
     })
 
+    var packagesDataTable = $('#packages-table').DataTable({
+        "ajax": {
+            url : 'packages/datatable',
+            type : 'GET'
+        },
+    })
+
     $(document).on('click', '#imgUpload', function(e) {
 
         $('#uploader-container').css('display', 'block');
@@ -81,11 +88,20 @@ $(document).ready(function() {
         $('#add-category').trigger('reset');
         $('#edit-category').trigger('reset');
     })
+
     $(document).on('click', '#closeEditProductForm', function(e) {
         $('.add_product_form').css('display', 'block');
         $('.edit_product_form').css('display', 'none');
         $('#add-product').trigger('reset');
         $('#edit-product').trigger('reset');
+        $('.image-container').html('');
+    })
+
+    $(document).on('click', '#closeEditPackageForm', function(e) {
+        $('.add_package_form').css('display', 'block');
+        $('.edit_package_form').css('display', 'none');
+        $('#add-package').trigger('reset');
+        $('#edit-package').trigger('reset');
     })
 
     // Edit User Button
@@ -111,6 +127,35 @@ $(document).ready(function() {
                 }else{
                     toastr.error(response.message);
                     usersDataTable.ajax.reload();
+                }
+            }
+        });
+
+    })
+
+    // Edit Package  Button
+    $(document).on('click', '.btnPackageEdit', function(e) {
+        e.preventDefault();
+        $('.add_package_form').css('display', 'none');
+        $('.edit_package_form').css('display', 'block');
+        var id = $(this).data('id');
+
+        $.ajax({
+            type: "GET",
+            url: "packages/edit",
+            data: { id : id },
+            dataType: "json",
+            success: function(response)
+            {
+                if (response.success) {
+                    $('#edit-package input[name=package_id]').val(response.package.id);
+                    $('#edit-package input[name=name]').val(response.package.name);
+                    $('#edit-package input[name=price]').val(response.package.price);
+                    $('#edit-package input[name=number_of_items]').val(response.package.dress_count);
+
+                }else{
+                    toastr.error(response.message);
+                    packagesDataTable.ajax.reload();
                 }
             }
         });
@@ -161,18 +206,12 @@ $(document).ready(function() {
                 console.log(response);
                 if (response.success) {
                     $('#edit-product input[name=name]').val(response.product.name);
+                    $('#edit-product select[name=size]').val(response.product.size_id);
                     $('#edit-product input[name=product_id]').val(response.product.id);
                     $('#edit-product input[name=price]').val(response.product.price);
                     $('#edit-product select[name=category]').val(response.product.category_id);
-                    $('#edit-product input[name=quantity]').val(response.product.quantity);
+                    $('#edit-product input[name=qty]').val(response.product.quantity);
                     $('#edit-product textarea[name=description]').val(response.product.description);
-                    $('#edit-product input[name=quantity]').val(response.product.quantity);
-                    if (response.product.is_featured) {
-                        $("#edit-product input[type=checkbox][name=is_featured]").prop("checked",true);
-                    }
-                    if (response.product.is_best) {
-                        $('#edit-product input[type=checkbox][name=is_best]').prop('checked', true);
-                    }
                     if (response.product.is_available) {
                         $('#edit-product input[type=checkbox][name=is_available]').prop('checked', true);
                     }
@@ -192,6 +231,90 @@ $(document).ready(function() {
 
     })
 
+    // FORMS
+    $('#add-package').on('submit', function(e) {
+        e.preventDefault();
+        var data = $(this).serialize();
+        var errors = "";
+
+        bootbox.confirm({ 
+            size: "small",
+            title: "Add Package",
+            message: "Are you sure you want to add this package?", 
+            callback: function(result){ 
+                if (result) {
+                    
+                    $.ajax({
+                        type: "POST",
+                        url: "packages/save",
+                        data: data,
+                        dataType: "json",
+                        success: function(response)
+                        {
+                            console.log(response);
+                            if (response.success) {
+                                toastr.success(response.message);
+                                // Clear all input on the Add user Form
+                                $('#add-user').find('input:text, input:password, select, textarea').val('');
+                                $('#add-user').find('input:radio, input:checkbox').prop('checked', false);
+                                packagesDataTable.ajax.reload(); // Reload Users DataTable
+                            }else{
+                                if (response.validation_errors) {
+                                    console.log(response.validation_errors);
+                                    toastr.error(response.validation_errors);
+                                }else{
+                                    toastr.error(response.message);
+                                }
+                            }
+                        }
+                    });
+                    
+                }
+            }
+        })
+    })
+
+    $('#edit-package').on('submit', function(e) {
+        e.preventDefault();
+        var data = $(this).serialize();
+
+        bootbox.confirm({ 
+            size: "small",
+            title: "Edit Package",
+            message: "Are you sure you want to update this package?", 
+            callback: function(result){ 
+                if (result) {
+                    
+                    $.ajax({
+                        type: "POST",
+                        url: "packages/update",
+                        data: data,
+                        dataType: "json",
+                        success: function(response)
+                        {
+                            console.log(response);
+                            if (response.success) {
+                                toastr.success(response.message);
+                                // Clear all input on the Add user Form
+                                $('#edit-package').find('input:text, input:password, select, textarea').val('');
+                                $('#edit-package').find('input:radio, input:checkbox').prop('checked', false);
+                                packagesDataTable.ajax.reload(); // Reload Users DataTable
+                            }else{
+                                if (response.validation_errors) {
+                                    console.log(response.validation_errors);
+                                    toastr.error(response.validation_errors);
+                                }else{
+                                    toastr.error(response.message);
+                                }
+                            }
+                        }
+                    });
+                    
+                }
+            }
+          })
+
+    })
 
 
     // FORMS
@@ -389,19 +512,19 @@ $(document).ready(function() {
                         processData: false,
                         success: function(response)
                         {
-                            console.log(response);
+                            //console.log(response);
                             if (response.success) {
                                 toastr.success(response.message);
                                 // Clear all input on the Add user Form
-                                $('#add-product').find('input:text, input:password, select, textarea').val('');
-                                $('#add-product').find('input:radio, input:checkbox').prop('checked', false);
+                                // $('#add-product').find('input:text, input:number, input:password, input:file, select, textarea').val('');
+                                // $('#add-product').find('input:radio, input:checkbox').prop('checked', false);
+                                $('#add-product')[0].reset();
                                 productsDataTable.ajax.reload(); // Reload Users DataTable
                             }else{
                                 if (response.validation_errors) {
                                     toastr.error(response.validation_errors);
-                                    if (response.product_image) {
-                                        toastr.error(response.product_image);
-                                    }
+                                }else if(response.product_image){
+                                    toastr.error(response.product_image);
                                 }else{
                                     toastr.error(response.message);
                                 }
@@ -439,8 +562,10 @@ $(document).ready(function() {
                             if (response.success) {
                                 toastr.success(response.message);
                                 // Clear all input on the Add user Form
-                                $('#edit-product').find('input:text, input:password, select, textarea').val('');
-                                $('#edit-product').find('input:radio, input:checkbox').prop('checked', false);
+                                // $('#edit-product').find('input:text, input:password, select, textarea').val('');
+                                // $('#edit-product').find('input:radio, input:checkbox').prop('checked', false);
+                                $('.image-container').html('');
+                                $('#edit-product')[0].reset();
                                 productsDataTable.ajax.reload(); // Reload Users DataTable
                             }else{
                                 if (response.validation_errors) {
