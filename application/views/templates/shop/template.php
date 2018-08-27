@@ -71,76 +71,8 @@
                                     <ul class="header-cart-area">
                                         <li>
                                             <div class="cart-area">
-                                                <a href="#"><i class="fa fa-shopping-cart" aria-hidden="true"></i><span>2</span></a>
-                                                <ul>
-                                                    <li>
-                                                        <div class="cart-single-product">
-                                                            <div class="media">
-                                                                <div class="pull-left cart-product-img">
-                                                                    <a href="#">
-                                                                        <img class="img-responsive" alt="product" src="img/best-seller/4.jpg">
-                                                                    </a>
-                                                                </div>
-                                                                <div class="media-body cart-content">
-                                                                    <ul>
-                                                                        <li>
-                                                                            <h2><a href="#">Product Title Here</a></h2>
-                                                                            <h3><span>Code:</span> STPT600</h3>
-                                                                        </li>
-                                                                        <li>
-                                                                            <p>X 1</p>
-                                                                        </li>
-                                                                        <li>
-                                                                            <p>$49</p>
-                                                                        </li>
-                                                                        <li>
-                                                                            <a class="trash" href="#"><i class="fa fa-trash-o"></i></a>
-                                                                        </li>
-                                                                    </ul>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </li>
-                                                    <li>
-                                                        <div class="cart-single-product">
-                                                            <div class="media">
-                                                                <div class="pull-left cart-product-img">
-                                                                    <a href="#">
-                                                                        <img class="img-responsive" alt="product" src="img/best-seller/5.jpg">
-                                                                    </a>
-                                                                </div>
-                                                                <div class="media-body cart-content">
-                                                                    <ul>
-                                                                        <li>
-                                                                            <h2><a href="#">Product Title Here</a></h2>
-                                                                            <h3><span>Code:</span> STPT460</h3>
-                                                                        </li>
-                                                                        <li>
-                                                                            <p>X 1</p>
-                                                                        </li>
-                                                                        <li>
-                                                                            <p>$75</p>
-                                                                        </li>
-                                                                        <li>
-                                                                            <a class="trash" href="#"><i class="fa fa-trash-o"></i></a>
-                                                                        </li>
-                                                                    </ul>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </li>
-                                                    <li>
-                                                        <span><span>Sub Total</span></span><span>$124</span>
-                                                        <span><span>Discount</span></span><span>$30</span>
-                                                        <span><span>Vat(20%)</span></span><span>$18.8</span>
-                                                        <span><span>Sub Total</span></span><span>$112.8</span>
-                                                    </li>
-                                                    <li>
-                                                        <ul class="checkout">
-                                                            <li><a href="cart.html" class="btn-checkout"><i class="fa fa-shopping-cart" aria-hidden="true"></i>View Cart</a></li>
-                                                            <li><a href="check-out.html" class="btn-checkout"><i class="fa fa-share" aria-hidden="true"></i>Checkout</a></li>
-                                                        </ul>
-                                                    </li>
+                                                <a href="#" id="cartTotal"><i class="fa fa-shopping-cart" aria-hidden="true"></i><span></span></a>
+                                                <ul id="cartContents">
                                                 </ul>
                                             </div>
                                         </li>
@@ -150,16 +82,13 @@
                                                     <a href="#" class="closebtn">×</a>
                                                     <h3 class="ctg-name-title">Category Name List</h3>
                                                     <ul class="sidenav-nav">
-                                                        <li><a href="shop1.html"><i class="flaticon-dress-1"></i>Women</a></li>
-                                                        <li><a href="shop2.html"><i class="flaticon-polo"></i>Men</a></li>
-                                                        <li><a href="shop3.html"><i class="flaticon-plug"></i>Electornics</a></li>
-                                                        <li><a href="shop4.html"><i class="flaticon-necklace"></i>Jewellery</a></li>
-                                                        <li><a href="shop5.html"><i class="flaticon-screen"></i>Computer</a></li>
-                                                        <li><a href="shop6.html"><i class="flaticon-headphones"></i>Head Phone</a></li>
-                                                        <li><a href="shop7.html"><i class="flaticon-transport"></i>Toys</a></li>
-                                                        <li><a href="shop1.html"><i class="flaticon-fashion"></i>Shoes</a></li>
-                                                        <li><a href="shop2.html"><i class="flaticon-dress"></i>Kid’s Wear</a></li>
-                                                        <li><a href="shop3.html"><i class="flaticon-technology"></i>Mobile</a></li>
+                                                        <?php foreach($categories as $category): ?>
+                                                            <li>
+                                                                <a href="<?php echo BASE_URL() . 'shop/cat/' . $category->id ;?>">
+                                                                    <?php echo $category->name; ?>
+                                                                </a>
+                                                            </li>
+                                                        <?php endforeach;?>
                                                     </ul>
                                                     <!-- times-->
                                                 </div>
@@ -182,24 +111,13 @@
                                 <div class="category-menu-area" id="category-menu-area-top">
                                     <h2 class="category-menu-title"><a href="#"><i class="fa fa-bars" aria-hidden="true"></i></a>Categories</h2>
                                     <ul class="category-menu-area-inner">
-                                        <li><a class="dropdown-toggle" data-toggle="dropdown" href="#"><i class="flaticon-dress-1"></i>Women<span><i class="flaticon-next"></i></span></a>
-                                            <ul class="dropdown-menu">
-                                                <li><a href="#">Women Sub Title 1</a></li>
-                                                <li><a href="#">Women Sub Title 2</a></li>
-                                                <li><a href="#">Women Sub Title 3</a></li>
-                                                <li><a href="#">Women Sub Title 4</a></li>
-                                                <li><a href="#">Women Sub Title 5</a></li>
-                                            </ul>
-                                        </li>
-                                        <li><a class="dropdown-toggle" data-toggle="dropdown" href="#"><i class="flaticon-polo"></i>Men<span><i class="flaticon-next"></i></span></a>
-                                            <ul class="dropdown-menu">
-                                                <li><a href="#">Men Sub Title 1</a></li>
-                                                <li><a href="#">Men Sub Title 2</a></li>
-                                                <li><a href="#">Men Sub Title 3</a></li>
-                                                <li><a href="#">Men Sub Title 4</a></li>
-                                                <li><a href="#">Men Sub Title 5</a></li>
-                                            </ul>
-                                        </li>
+                                        <?php foreach($categories as $category): ?>
+                                            <li>
+                                                <a href="<?php echo BASE_URL() . 'shop/cat/' . $category->id ;?>">
+                                                    <?php echo $category->name; ?>
+                                                </a>
+                                            </li>
+                                        <?php endforeach;?>
                                     </ul>
                                 </div>
                             </div>
@@ -288,6 +206,7 @@
     <script src="<?php echo base_url(); ?>assets/js/wNumb.js" type="text/javascript"></script>
     <!-- Custom Js -->
     <script src="<?php echo base_url(); ?>assets/js/main.js" type="text/javascript"></script>
+    <script src="<?php echo base_url(); ?>assets/js/toastr.min.js"></script>
 
     <!-- Additional Scripts -->
     <?php if(isset($add_js)) : ?>

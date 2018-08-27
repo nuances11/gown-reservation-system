@@ -12,7 +12,11 @@ class Products_Model extends CI_Model
         $this->db->select('p.*, c.name as catname')
                 ->from('products as p')
                 ->join('categories as c', 'c.id = p.category_id');
-        return $this->db->get("products");
+        $query = $this->db->get();
+        if($query->num_rows()){
+            return $query;
+        }
+        return [];
     }
 
     function saveProduct($data)

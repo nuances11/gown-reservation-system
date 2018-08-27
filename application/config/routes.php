@@ -89,6 +89,10 @@ $route['shop/orderhistory']['GET'] = 'shop/orderhistory';
 $route['shop/checkout']['GET'] = 'shop/checkout';
 $route['shop/product/(:num)']['GET'] = 'shop/product/$1';
 $route['shop']['GET'] = 'shop';
+$route['shop/cat/(:num)']['GET'] = 'shop/category/$1';
+$route['shop/add']['POST'] = 'shop/add';
+$route['shop/cartount']['GET'] = 'shop/getCartItems';
+$route['shop/removeItem']['POST'] = 'shop/removeItem';
 
 $route['default_controller'] = 'welcome';
 $route['404_override'] = '';

@@ -17,7 +17,7 @@ class Shop extends CI_Controller {
 			);
 
 			$js = array(
-
+				'assets/js/shop.js',
 			);
 
 			$this->template->set_additional_css($styles);
@@ -38,12 +38,14 @@ class Shop extends CI_Controller {
 
 	public function product($id)
 	{
-		$this->template->set_template('checkout');
 		$this->template->load_sub('categories', $this->categories_model->getAllCategories());
 		
 		$product = $this->products_model->getProductInfo($id);
-		
-		$this->template->set_title($product->name . ' - Casa Moda');
+		if($product){
+			
+			$this->template->set_title($product->name . ' | Casa Moda');
+
+		}
 		$this->template->load_sub('product', $product);
 		$this->template->load('frontend/productdetails');
 	}
@@ -72,6 +74,87 @@ class Shop extends CI_Controller {
 		$this->template->set_title('Cart - Casa Moda');
 		$this->template->load('frontend/cart');
 	}
+
+	public function category($id)
+	{
+		$this->template->load_sub('categories', $this->categories_model->getAllCategories());
+		$products = $this->categories_model->getCategoryProducts($id);
+		$category = $this->categories_model->getCategoryInfo($id);
+		if($products){
+			
+			$this->template->set_title($category->name . ' | Casa Moda');
+
+		}
+		$this->template->load_sub('products', $products);
+		$this->template->load('frontend/category');
+	}
+
+	public function add()
+	{
+		$response = array();
+		$id = $this->input->post('id');
+
+		$product = $this->products_model->getProductInfo($id);
+
+		if ($product) {
+			$data = array(
+				'id' => $product->id,
+				'qty' => 1,
+				'price' => $product->qty,
+				'name' => $product->name,
+				'option' => array(
+					'size' => $product->size_id
+				)
+			);
+
+			$result = $this->cart->insert($data);
+			if ($result) {
+				$response['success'] = TRUE;
+				$response['message'] = $product->name . ' added to cart.';
+			}else{
+				$response['success'] = FALSE;
+				$response['message'] = 'Error adding product to cart';
+			}
+		}else{
+			$response['success'] = FALSE;
+			$response['message'] = 'Product not found. Error on adding to cart';
+		}
+
+		echo json_encode($response);
+     	exit();
+
+	}
+
+	public function getCartItems()
+	{
+		$response['totalCartItems'] = $this->cart->total_items();
+		$response['items'] = $this->cart->contents();
+		$response['total'] = $this->cart->format_number($this->cart->total());
+		echo json_encode($response);
+		exit();	
+	}
+
+	public function removeItem()
+	{
+		$response = array();
+		$data = array(
+			'rowid'   => $this->input->post('rowid'),
+			'qty'     => 0
+		);
+		
+		$result = $this->cart->update($data);
+		if ($result) {
+			$response['success'] = TRUE;
+			$response['message'] = 'Product removed from cart';
+		}else{
+			$response['success'] = FALSE;
+			$response['message'] = 'Error removing product on cart';
+		}
+
+		echo json_encode($response);
+		exit();	
+	}
+
 
 }
 

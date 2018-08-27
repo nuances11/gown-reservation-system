@@ -107,7 +107,7 @@
                                                     <a class="product_add_to_cart" data-id="<?php echo $product->id ;?>" href="javascript:void(0);">Add To Cart</a>
                                                 </li>
                                                 <li>
-                                                    <a href="<?php echo BASE_URL() . 'shop/product/' . $product->id; ?>">
+                                                    <a href="<?php echo BASE_URL() . 'product/' . $product->id; ?>">
                                                         <i class="fa fa-eye" aria-hidden="true"></i>
                                                     </a>
                                                 </li>
