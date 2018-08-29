@@ -26,9 +26,10 @@ class Products_Model extends CI_Model
 
     function getProductInfo($id)
     {
-        $this->db->select('p.*, c.name as catname')
+        $this->db->select('p.*, c.name as catname, s.size as size_name')
                 ->from('products as p')
                 ->join('categories as c', 'c.id = p.category_id')
+                ->join('size as s', 's.id = p.size_id')
                 ->where('p.id', $id);
         $query = $this->db->get();
         if($query->num_rows()){
