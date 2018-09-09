@@ -19,7 +19,6 @@ $(document).ready(function() {
             dataType: "json",
             success: function(response)
             {
-                console.log(response);
                 var contents = '';
                 var cartContents = $('#cartContents');
 
@@ -62,7 +61,7 @@ $(document).ready(function() {
     var minlength = 2;
 
     $(document).on('keyup', '#orderSearch', function(e) {
-        console.log($(this).val());
+        
         var that = this;
         var value = $(this).val();
         var content = '';
@@ -81,9 +80,7 @@ $(document).ready(function() {
                     //we need to check if the value is the same
                     if (value==$(that).val()) {
                     //Receiving the result of search here
-                        //console.log(response);
                         $.each( response, function( key, value ) {
-                            console.log(response);
                             content += '<tr><td><a href="/shop/order/' + value.transaction_no + '">' + value.transaction_no + '<i class="fa fa-paperclip" aria-hidden="true"></i></a></td><td>' + value.firstname + ' ' + value.lastname + '</td><td>' + value.created_at + '</td><td class="pending">Pending</td></tr>';
                         })
                         $('#orderResultTable tbody').html(content);
@@ -109,7 +106,6 @@ $(document).ready(function() {
             dataType: "json",
             success: function(response)
             {
-                console.log(response);
                 if (response.success) {
                     location.reload();
                     updateCartCount();
@@ -126,39 +122,46 @@ $(document).ready(function() {
         var maxQty = $('.quantity-input').data('max-qty');
         var inputQty = $('input[name=quantity]').val();
         var id = $(this).data('id');
-        if (inputQty) {
-            if (inputQty > maxQty) {
-                alert('Input quantity is more than the current product quantity.');
-            }else{
-                $.ajax({
-                    type: "POST",
-                    url: "/shop/add",
-                    data: { 
-                        id : id,
-                        qty : inputQty,
-                    },
-                    dataType: "json",
-                    success: function(response)
-                    {
-                        console.log(response);
-                        if (response.success) {
-                            alert(response.message);
-                            updateCartCount();
-                        }else{
-                            alert(response.message);
+        var date = $('.quantity-input').data('date');
+        var r = confirm("Are you sure you want to add this product to cart?");
+
+        if (r == true) {
+            
+            if (inputQty) {
+                if (inputQty > maxQty) {
+                    alert('Input quantity is more than the current product quantity.');
+                }else{
+                    $.ajax({
+                        type: "POST",
+                        url: "/shop/add",
+                        data: { 
+                            id : id,
+                            qty : inputQty,
+                            date : date,
+                        },
+                        dataType: "json",
+                        success: function(response)
+                        {
+                            if (response.success) {
+                                alert(response.message);
+                                updateCartCount();
+                            }else{
+                                alert(response.message);
+                            }
                         }
-                    }
-                });
+                    });
+                }
+            }else{
+                alert('Please add product quantity');
             }
-        }else{
-            alert('Please add product quantity');
+
         }
+
     })
 
     $('#checkout-form').on('submit', function(e) {
         e.preventDefault();
         var data = $(this).serialize();
-        console.log(data);
         var r = confirm("Are you sure you want to checkout?");
         if (r == true) {
             
@@ -169,7 +172,7 @@ $(document).ready(function() {
                 dataType: "json",
                 success: function(response)
                 {
-                    console.log(response);
+                    
                     if (response.success) {
                         toastr.success(response.messages);
                         $('#checkout-form').trigger('reset');
@@ -188,7 +191,7 @@ $(document).ready(function() {
     $(document).on('click', '.deleteItem', function(e) {
         e.preventDefault();
         var rowid = $(this).data('row-id');
-        console.log(rowid);
+        
         $.ajax({
             type: "POST",
             url: "/shop/removeItem",
@@ -196,7 +199,7 @@ $(document).ready(function() {
             dataType: "json",
             success: function(response)
             {
-                console.log(response);
+                
                 if (response.success) {
                     alert(response.message);
                     updateCartCount();
@@ -210,7 +213,7 @@ $(document).ready(function() {
     $(document).on('click', '.removeItem', function(e) {
         e.preventDefault();
         var rowid = $(this).data('row-id');
-        console.log(rowid);
+        
         $.ajax({
             type: "POST",
             url: "/shop/removeItem",
@@ -218,7 +221,7 @@ $(document).ready(function() {
             dataType: "json",
             success: function(response)
             {
-                console.log(response);
+                
                 if (response.success) {
                     location.reload();
                 }else{
@@ -227,27 +230,173 @@ $(document).ready(function() {
             }
         });
     })
+
+    var dateToday = new Date(); 
+
+    $('.inner-product-details-cart').hide();
+
+    
+    $( ".datepicker" ).datepicker({
+        minDate: dateToday,
+        onSelect: function(dateText, inst) {
+            var id = inst.input.context.dataset.id;
+            // var id = $(this).data('id');
+            var mydata = {
+                id : id,
+                date : dateText,
+            }
+
+            $.ajax({
+                type: "GET",
+                url: "/shop/getAvailableQty",
+                data: mydata,
+                dataType: "json",
+                success: function(response)
+                {
+                    if (response.success) {
+
+                        if (response.availableQty > 0) {
+                            $('.product_qty').html('<span>QTY : </span>' + response.availableQty);
+                            $('.productDetailsModal .quantity-input').attr('data-qty', response.availableQty);
+                            $('.productDetailsModal .quantity-input').attr('data-id', id);
+                            $('.productDetailsModal .quantity-input').attr('data-date', dateText);
+                            $('.inner-product-details-cart').show();
+
+                            // for single product
+                            $('#checkout-form input[name="quantity"]').attr('data-max-qty', response.availableQty);
+                            $('#checkout-form input[name="quantity"]').attr('max', response.availableQty);
+
+                        }else{
+                            $('.out-of-stock-alert').show();
+                        }
+                        
+                    }
+                }
+            });
+            
+        }
+    });
+
+    $(".productDetailsModal").on("hidden.bs.modal", function() {
+        $('.productDetailsModal').find('input:text, input:password, select, textarea').val('');
+        $('.productDetailsModal').find('input:radio, input:checkbox').prop('checked', false);
+        $('.product_qty').html('');
+        $('.inner-product-details-cart').hide();
+    });
     
     $(document).on('click', '.product_add_to_cart', function(e) {
-    // $('.product_add_to_cart').on('click', function(e) {
         e.preventDefault();
+
         var id = $(this).data('id');
         
+        var imgSrc = ''
+        $('.productDetailsModal').attr('data-id', id);
+        $('.productDetailsModal').modal('show');
+
         $.ajax({
-            type: "POST",
-            url: "/shop/add",
+            type: "GET",
+            url: "/products/edit",
             data: { id : id },
             dataType: "json",
             success: function(response)
             {
                 console.log(response);
                 if (response.success) {
-                    alert(response.message);
-                    updateCartCount();
-                }else{
-                    alert(response.message);
+                    
+                    var price = accounting.formatMoney(response.product.price, "PHP ", 2, ",", ".");
+                    if(response.product.image){
+                        imgSrc = '/uploads/img/products/' + response.product.image;
+                    }else{
+                        imgSrc = '/assets/img/1.jpg';
+                    }
+                    $('.productDetailsModal .product-img').attr('src', imgSrc);
+                    $('.productDetailsModal .datepicker').attr('data-id', response.product.id);
+                    $('.productDetailsModal #product-title').html(response.product.name);
+                    $('.productDetailsModal .price').html(price);
+                    $('.productDetailsModal .description').html(response.product.description);
+                    $('.productDetailsModal .category').html('<span>Category:</span> ' + response.product.catname);
                 }
+                
             }
         });
+    })
+
+    $('.out-of-stock-alert').hide();
+
+    // $(document).on('input', '.datepicker', function(e) {
+    //     e.preventDefault();
+    //     var date = $(this).val();
+    //     var id = $(this).data('id');
+
+    //     var mydata = {
+    //         id : id,
+    //         date : date,
+    //     }
+
+    //     $.ajax({
+    //         type: "GET",
+    //         url: "/shop/getAvailableQty",
+    //         data: mydata,
+    //         dataType: "json",
+    //         success: function(response)
+    //         {
+    //             if (response.success) {
+
+    //                 if (response.availableQty > 0) {
+    //                     $('.product_qty').html('<span>QTY : </span>' + response.availableQty);
+    //                     $('.productDetailsModal .quantity-input').attr('data-qty', response.availableQty);
+    //                     $('.productDetailsModal .quantity-input').attr('data-id', id);
+    //                     $('.productDetailsModal .quantity-input').attr('data-date', date);
+    //                     $('.inner-product-details-cart').show();
+    //                 }else{
+    //                     $('.out-of-stock-alert').show();
+    //                 }
+                    
+    //             }
+    //         }
+    //     });
+
+    //     return;
+
+    // })
+
+    $(document).on('click', '#addToCart', function(e) {
+        var availableQty = $('.productDetailsModal .quantity-input').data('qty');
+        var id = $('.productDetailsModal .quantity-input').data('id');
+        var date = $('.productDetailsModal .quantity-input').data('date');
+        var inputQty = $('.productDetailsModal .quantity-input').val();
+        var r = confirm("Are you sure you want to add this product to cart?");
+
+        if (r == true) {
+
+            if (availableQty < inputQty) {
+                alert('Input quantity is greater than the available product quantity.');
+                return;
+            }else{
+                
+                $.ajax({
+                    type: "POST",
+                    url: "/shop/add",
+                    data: { 
+                        id : id,
+                        qty : inputQty,
+                        date : date,
+                    },
+                    dataType: "json",
+                    success: function(response)
+                    {
+                        if (response.success) {
+                            alert(response.message);
+                            $('.productDetailsModal').modal('toggle'); 
+                            updateCartCount();
+                        }else{
+                            alert(response.message);
+                        }
+                    }
+                });
+
+            }
+
+        }
     })
 })

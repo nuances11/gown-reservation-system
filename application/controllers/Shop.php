@@ -18,6 +18,7 @@ class Shop extends CI_Controller {
 			);
 
 			$js = array(
+				'assets/js/accounting.min.js',
 				'assets/js/shop.js',
 			);
 
@@ -128,6 +129,7 @@ class Shop extends CI_Controller {
 			);
 		}else{
 
+
 			if ($this->cart->contents()) {
 
 				$trans_no = $this->transactions_model->getTransNumber();
@@ -140,7 +142,7 @@ class Shop extends CI_Controller {
 					'phone' => $this->input->post('phone'),
 					'company-name' => $this->input->post('company-name'),
 					'address' => $this->input->post('address'),
-					'town-city' => $this->input->post('town-city'),
+					'town_city' => $this->input->post('town-city'),
 				);
 
 				$res = $this->transactions_model->saveTransaction($data);
@@ -155,11 +157,13 @@ class Shop extends CI_Controller {
 							'qty' => $items['qty'],
 							'price' => $items['price'],
 							'subtotal' => $items['subtotal'],
+							'res_date' => $items['option']['date'],
 						);
 
 						$saveTrans = $this->transactions_model->saveTransactionDetails($itemInfo);
 
 						if ($saveTrans) {
+
 							$this->cart->destroy();
 							$response = array(
 								"url" => BASE_URL() . 'shop/order/' . $trans_no,
@@ -201,6 +205,7 @@ class Shop extends CI_Controller {
 	{
 		$response = array();
 		$id = $this->input->post('id');
+		$date = $this->input->post('date');
 		$qty = ($this->input->post('qty')) ? $this->input->post('qty') : 1 ;
 
 		$product = $this->products_model->getProductInfo($id);
@@ -212,7 +217,8 @@ class Shop extends CI_Controller {
 				'price' => $product->price,
 				'name' => $product->name . '-' . $product->size_name,
 				'option' => array(
-					'size' => $product->size_id
+					'size' => $product->size_id,
+					'date' => $date,
 				)
 			);
 
@@ -283,6 +289,26 @@ class Shop extends CI_Controller {
 
 		echo json_encode($response);
 		exit();	
+	}
+
+	public function getAvailableQty()
+	{
+		$response = array();
+		$id = $this->input->get('id');
+		$date = $this->input->get('date');
+
+		$res = $this->transactions_model->getQty($id, $date);
+
+		if ($res) {
+			$response['availableQty'] = $res;
+			$response['success'] = TRUE;
+		}else{
+			$response['success'] = FALSE;
+		}
+
+		echo json_encode($response);
+		exit();	
+
 	}
 
 

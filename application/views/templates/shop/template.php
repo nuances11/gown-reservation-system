@@ -32,6 +32,12 @@
     <link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/nouislider.min.css">
     <!-- Custom CSS -->
     <link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/style.css">
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <style>
+        #ui-datepicker-div{
+            z-index: 1051 !important;
+        }
+    </style>
 
     <?php if(isset($additional_css)) : ?>
         <?php foreach($additional_css as $css): ?>
@@ -209,6 +215,7 @@
     <!-- Custom Js -->
     <script src="<?php echo base_url(); ?>assets/js/main.js" type="text/javascript"></script>
     <script src="<?php echo base_url(); ?>assets/js/toastr.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
     <!-- Additional Scripts -->
     <?php if(isset($add_js)) : ?>

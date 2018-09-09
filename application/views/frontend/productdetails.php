@@ -36,20 +36,21 @@
 									</p>
 
 									<form id="checkout-form">
-										<?php if($product->qty <= 0) :?>
-										<div class="alert alert-danger">
+										<div class="alert alert-danger out-of-stock-alert">
 											<p>Sorry, product is
 												<strong>OUT OF STOCK</strong>
 												<a href="<?php echo BASE_URL() . 'shop';?>">click here</a> to shop </p>
 										</div>
-										<?php else: ?>
-										<p>Qty :
-											<?php echo $product->qty ;?>
-										</p>
+										<div class="input-group">
+											<label>PICK A DATE : </label>
+											<input type="text" size="7"  data-id="<?php echo $product->id ;?>" class="form-control datepicker" id="datepicker" name="date">
+										</div>
+										<br/>
+										<p class="product_qty"></p>
 										<ul class="inner-product-details-cart">
 											<li>
 												<div class="input-group quantity-holder" id="quantity-holder">
-													<input type="text" name="quantity" min="0" data-max-qty="<?php echo $product->qty ;?>" max="<?php echo $product->qty ;?>" class="form-control quantity-input" value="1" placeholder="1">
+													<input type="text" name="quantity" min="0" class="form-control quantity-input" value="1" placeholder="1">
 													<div class="input-group-btn-vertical">
 														<button class="btn btn-default quantity-plus" type="button">
 															<i class="fa fa-plus" aria-hidden="true"></i>
@@ -64,7 +65,6 @@
 												<a href="javascript:void(0);" data-id="<?php echo $product->id ;?>" id="productAddToCart">Add To Cart</a>
 											</li>
 										</ul>
-										<?php endif;?>
 
 									</form>
 

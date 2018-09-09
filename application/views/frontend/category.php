@@ -129,4 +129,5 @@
 		</div>
 	</div>
 </div>
+<?php $this->load->view('shop/includes/product_details_modal') ;?>
 

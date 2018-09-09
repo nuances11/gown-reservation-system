@@ -103,7 +103,7 @@
 						</a>
 					</li>
 					<li>
-						<a href="#">
+						<a href="<?php echo BASE_URL() ;?>transactions">
 							<i class="fa fa-laptop"></i>
 							<span>Transactions</span>
 							<span class="pull-right-container">

@@ -1,6 +1,13 @@
 $(document).ready(function() {
 
     // DATA TABLES
+    var usersDataTable = $('#transactions-table').DataTable({
+        "ajax": {
+            url : 'transactions/datatable',
+            type : 'GET'
+        },
+    })
+
     var usersDataTable = $('#users-table').DataTable({
         "ajax": {
             url : 'users/datatable',
@@ -34,11 +41,9 @@ $(document).ready(function() {
 
     })
 
-    // Dropzone
-    Dropzone.options.imageUpload = {
-        maxFilesize:1,
-        acceptedFiles: ".jpeg,.jpg,.png,.gif"
-    };
+    $(document).on('click', '#printPageClose', function() {
+        window.close();
+    })
 
     // Delete User Button
     $(document).on('click', '.btnUserDelete', function(e) {
@@ -210,7 +215,7 @@ $(document).ready(function() {
                     $('#edit-product input[name=product_id]').val(response.product.id);
                     $('#edit-product input[name=price]').val(response.product.price);
                     $('#edit-product select[name=category]').val(response.product.category_id);
-                    $('#edit-product input[name=qty]').val(response.product.quantity);
+                    $('#edit-product input[name=qty]').val(response.product.qty);
                     $('#edit-product textarea[name=description]').val(response.product.description);
                     if (response.product.is_available) {
                         $('#edit-product input[type=checkbox][name=is_available]').prop('checked', true);

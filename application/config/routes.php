@@ -30,6 +30,13 @@ $route['packages/save']['POST'] = 'packages/save';
 $route['packages/edit']['GET'] = 'packages/edit';
 $route['packages/update']['POST'] = 'packages/update';
 
+// TRANSACTIONS
+$route['transactions']['GET'] = 'transactions';
+$route['transactions/datatable']['GET'] = 'transactions/datatable';
+$route['transactions/order/(:any)']['GET'] = 'transactions/order/$1';
+$route['transactions/order-print/(:any)']['GET'] = 'transactions/orderPrint/$1';
+$route['transactions/set-order/(:any)/(:num)']['GET'] = 'transactions/set_order/$1/$2';
+
 
 // FRONTEND
 $route['shop/contact']['GET'] = 'contact';
@@ -47,6 +54,7 @@ $route['shop/removeItem']['POST'] = 'shop/removeItem';
 $route['shop/updatecart']['POST'] = 'shop/updatecart';
 $route['shop/checkout-cart']['POST'] = 'shop/checkoutCart';
 $route['shop/search/order']['GET'] = 'shop/searchOrder';
+$route['shop/getAvailableQty']['GET'] = 'shop/getAvailableQty';
 
 $route['sample'] = 'shop/sample';
 
