@@ -20,8 +20,10 @@
                                 <h3 id="product-title">Product Title Here</h3>
                                 <p class="price">$59.00</p>
                                 <p class="description">Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tinc amet risus consectetur, non consectetur nisl finibus. Ut ac eros quis mi volutpat cursus vel non risus.</p>
+                                
                                 <div class="product-details-content">
                                     <p class="category"><span>Category:</span> Demo Products</p>
+                                    <p class="size"></p>
                                     <div class="input-group">
                                         <label>PICK A DATE : </label>
                                         <input type="text" size="7" class="form-control datepicker" id="datepicker" name="date">

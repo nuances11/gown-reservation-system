@@ -41,6 +41,8 @@
 												<strong>OUT OF STOCK</strong>
 												<a href="<?php echo BASE_URL() . 'shop';?>">click here</a> to shop </p>
 										</div>
+										<p><strong>CATEGORY: </strong><?php echo $product->catname ;?></p>
+										<p><strong>SIZE: </strong><?php echo $product->size_name ;?></p>
 										<div class="input-group">
 											<label>PICK A DATE : </label>
 											<input type="text" size="7"  data-id="<?php echo $product->id ;?>" class="form-control datepicker" id="datepicker" name="date">

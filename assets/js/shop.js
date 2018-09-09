@@ -65,6 +65,7 @@ $(document).ready(function() {
         var that = this;
         var value = $(this).val();
         var content = '';
+        var order_status = '';
 
         if (value.length >= minlength ) {
             if (searchRequest != null) 
@@ -81,7 +82,16 @@ $(document).ready(function() {
                     if (value==$(that).val()) {
                     //Receiving the result of search here
                         $.each( response, function( key, value ) {
-                            content += '<tr><td><a href="/shop/order/' + value.transaction_no + '">' + value.transaction_no + '<i class="fa fa-paperclip" aria-hidden="true"></i></a></td><td>' + value.firstname + ' ' + value.lastname + '</td><td>' + value.created_at + '</td><td class="pending">Pending</td></tr>';
+                            if (value.status == 0) {
+                                order_status = 'Pending';
+                            }else if (value.status == 1) {
+                                order_status = 'Accepted';
+                            }else if (value.status == 2) {
+                                order_status = 'Declined';
+                            }else if (value.status == 3) {
+                                order_status = 'Completed';
+                            }
+                            content += '<tr><td><a href="/shop/order/' + value.transaction_no + '">' + value.transaction_no + '<i class="fa fa-paperclip" aria-hidden="true"></i></a></td><td>' + value.firstname + ' ' + value.lastname + '</td><td>' + value.created_at + '</td><td class="pending">'+order_status+'</td></tr>';
                         })
                         $('#orderResultTable tbody').html(content);
                     }
@@ -315,6 +325,7 @@ $(document).ready(function() {
                     $('.productDetailsModal .price').html(price);
                     $('.productDetailsModal .description').html(response.product.description);
                     $('.productDetailsModal .category').html('<span>Category:</span> ' + response.product.catname);
+                    $('.productDetailsModal .size').html('<span>Size:</span> ' + response.product.size_name);
                 }
                 
             }

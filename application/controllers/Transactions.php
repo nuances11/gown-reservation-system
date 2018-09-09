@@ -83,9 +83,11 @@ class Transactions extends CI_Controller {
               $order_status = '<span style="color:orange;"><strong>PENDING</strong></span>';
             }elseif ($r->status == 1) {
               $order_status = '<span style="color:green;"><strong>APPROVED</strong></span>';
-            }else {
+            }elseif ($r->status == 2) {
               $order_status = '<span style="color:red;"><strong>DECLINED</strong></span>';
-            }
+            }elseif ($r->status == 3) {
+                $order_status = '<span style="color:white;background-color:green;border-radius:10px;"><strong>COMPLETED</strong></span>';
+              }
 
             $data[] = array(
 
@@ -132,22 +134,36 @@ class Transactions extends CI_Controller {
       $this->template->load('transactions/invoice-print');
     }
 
-    public function set_order($order = NULL, $id)
+    public function set_order()
     {
+        $response = array();
+        $order = $this->input->post('order');
+        $id = $this->input->post('id');
+
         if ($order != NULL) {
         
             $res = $this->transactions_model->set_order($order, $id);
 
             if ($res) {
-            
-                $this->session->set_flashdata('update', 'Order status updated');
-                redirect($_SERVER['HTTP_REFERER']);
 
+                $response['success'] = TRUE;
+                $response['message'] = 'Order updated Successfully';
+            
+                // $this->session->set_flashdata('update', 'Order status updated');
+                // redirect('transactions/order/' . $id);
+
+            }else{
+                $response['success'] = FALSE;
+                $response['message'] = 'Error Updating Order';
             }
 
         }else{
-            redirect($_SERVER['HTTP_REFERER']);
+            $response['success'] = FALSE;
+            $response['message'] = 'Error Updating Order';
         }
+
+        echo json_encode($response);
+        exit();
     }
 
 }

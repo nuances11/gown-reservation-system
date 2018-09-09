@@ -221,5 +221,25 @@ class Categories extends CI_Controller {
 
     }
 
+    public function delete()
+    {
+        $response = array();
+
+        $id = $this->input->post('id');
+
+        $res = $this->categories_model->delete_category($id);
+
+        if ($res) {
+            $response['success'] = TRUE;
+            $response['message'] = 'Category Deleted';
+        }else{
+            $response['success'] = FALSE;
+            $response['message'] = 'Cannot delete category, there is a product associated with it';
+        }
+
+        echo json_encode($response);
+        exit;
+    }
+
 }
 

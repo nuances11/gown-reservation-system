@@ -50,6 +50,19 @@ class Users_Model extends CI_Model
         return $this->db->get("users");
     }
 
+    function get_login_data($username, $pass)
+    {
+        $this->db->select('*')
+                ->from('users')
+                ->where('username', $username)
+                ->where('password', $pass);
+        $query = $this->db->get();
+        if($query->num_rows()){
+			return $query->row();
+		}
+		return []; 
+    }
+
 }
 
 ?>

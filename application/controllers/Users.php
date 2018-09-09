@@ -261,4 +261,68 @@ class Users extends CI_Controller {
 
     }
 
+    public function login()
+    {
+        $styles = array(
+                'assets/css/toastr.min.css'
+        );
+
+        $js = array(
+                'assets/js/application.js',
+                'assets/js/toastr.min.js',
+        );
+
+        $this->template->set_additional_css($styles);
+        $this->template->set_additional_js($js);
+
+        $this->template->set_title('Admin - Login');
+        $this->template->set_template('login');
+
+		$this->template->load('admin/login');
+    }
+
+    public function user_login()
+    {
+        $response = array();
+
+        $this->form_validation->set_rules('username','Username', 'required');
+        $this->form_validation->set_rules('password','Password', 'required');
+        if ($this->form_validation->run() == FALSE) {
+
+            $response['success'] = FALSE;
+            $response['message'] = validation_errors();
+
+        }else{
+
+            $user = $this->users_model->get_login_data($this->input->post('username'), md5($this->input->post('password')));
+            
+
+            if($user){
+                $this->session->set_userdata( array(
+                    'id' => $user->id,
+                    'name' => $user->name,
+                    'username'=> $user->username,
+                    'user_group'=> $user->user_group,
+                    'isLoggedIn'=>true
+                    )
+                );
+                $response['success'] = TRUE;
+                $response['message'] = 'Login Complete';
+                $response['redirect_url'] = BASE_URL() . 'products';
+            }else {
+                $response['success'] = FALSE;
+                $response['message'] = 'Invalid Username or Password';
+            }
+        }
+
+        echo json_encode($response);
+        exit;
+    }
+
+    function logout()
+    {
+        session_destroy();
+        redirect(base_url('cmlogin'),'refresh');
+    }
+
 }

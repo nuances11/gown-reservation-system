@@ -17,7 +17,20 @@
 			<li>Email:<span>
 					<?php echo $transaction->email ;?></span></li>
 			<li>Total:<span>PHP <?php echo number_format($total,2);?></span></li>
-            <li>Status:<span>Pending</span></li>
+            <li>Status:<span>
+			<?php
+                    if ($transaction->status == 0) {
+                        echo 'PENDING';
+                    }elseif ($transaction->status == 1) {
+                        echo 'APPROVED';
+                    }elseif ($transaction->status == 2) {
+                        echo 'DECLINED';
+                    }elseif ($transaction->status == 3) {
+						echo 'COMPLETED';
+					}
+                ?>	
+
+			</span></li>
 		</ul>
 		<div class="row">
 			<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">

@@ -353,5 +353,25 @@ class Products extends CI_Controller {
 
     }
 
+    public function delete()
+    {
+        $response = array();
+
+        $id = $this->input->post('id');
+
+        $res = $this->products_model->delete_product($id);
+
+        if ($res) {
+            $response['success'] = TRUE;
+            $response['message'] = 'Product Deleted';
+        }else{
+            $response['success'] = FALSE;
+            $response['message'] = 'Cannot delete product, it is currently under a transaction process';
+        }
+
+        echo json_encode($response);
+        exit;
+    }
+
 }
 

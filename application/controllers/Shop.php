@@ -9,6 +9,7 @@ class Shop extends CI_Controller {
 			$this->load->model("categories_model");
 			$this->load->model("products_model");
 			$this->load->model("transactions_model");
+			$this->load->model("packages_model");
 
 			// Pagination
 			$this->load->library('pagination');
@@ -309,6 +310,14 @@ class Shop extends CI_Controller {
 		echo json_encode($response);
 		exit();	
 
+	}
+
+	public function packages()
+	{
+		$this->template->load_sub('categories', $this->categories_model->getAllCategories());
+		$this->template->load_sub('packages', $this->packages_model->getAllPackages());
+		$this->template->set_title('Packages - Casa Moda');
+		$this->template->load('frontend/package');
 	}
 
 

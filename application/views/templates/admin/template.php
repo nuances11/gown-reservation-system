@@ -1,3 +1,10 @@
+<?php
+    defined('BASEPATH') OR exit('No direct script access allowed');
+    if (!isset($_SESSION['id'])){
+        header("Location:" . BASE_URL() . "cmlogin");
+    }
+?>
+
 <!DOCTYPE html>
 <html>
 
@@ -76,9 +83,15 @@
 						<img src="<?php echo base_url(); ?>assets/img/user2-160x160.jpg" class="img-circle" alt="User Image">
 					</div>
 					<div class="pull-left info">
-						<p>Casa Moda</p>
+						<p><?php echo $this->session->name ;?></p>
 						<a href="#">
-							<i class="fa fa-circle text-success"></i> Admin</a>
+							<i class="fa fa-circle text-success"></i> 
+						<?php if($this->session->user_group == 1) :?>
+							Admin
+						<?php elseif($this->session->user_group == 2) : ?>
+							Staff
+						<?php endif ;?>
+						</a>
 					</div>
 				</div>
 				<!-- sidebar menu: : style can be found in sidebar.less -->
@@ -88,55 +101,39 @@
 						<a href="<?php echo BASE_URL() ;?>products">
 							<i class="fa fa-th"></i>
 							<span>Products</span>
-							<span class="pull-right-container">
-								<span class="label label-default pull-right">4</span>
-							</span>
 						</a>
 					</li>
 					<li>
 						<a href="<?php echo BASE_URL() ;?>categories">
 							<i class="fa fa-files-o"></i>
 							<span>Categories</span>
-							<span class="pull-right-container">
-								<span class="label label-default pull-right">4</span>
-							</span>
 						</a>
 					</li>
 					<li>
 						<a href="<?php echo BASE_URL() ;?>transactions">
 							<i class="fa fa-laptop"></i>
 							<span>Transactions</span>
-							<span class="pull-right-container">
-								<span class="label label-default pull-right">4</span>
-							</span>
 						</a>
 					</li>
+					<?php if($this->session->user_group == 1) :?>
 					<li>
 						<a href="<?php echo BASE_URL() ;?>users">
 							<i class="fa fa-users"></i>
 							<span>Users</span>
-							<span class="pull-right-container">
-								<span class="label label-default pull-right">4</span>
-							</span>
 						</a>
 					</li>
+					<?php endif ;?>
 					<li>
 						<a href="<?php echo BASE_URL() ;?>packages">
 							<i class="fa fa-gift"></i>
 							<span>Packages</span>
-							<span class="pull-right-container">
-								<span class="label label-default pull-right">4</span>
-							</span>
 						</a>
 					</li>
 					<li class="header">SIGNOUT</li>
 					<li>
-						<a href="#">
+						<a href="<?php echo BASE_URL() ;?>users/logout">
 							<i class="fa fa-sign-out"></i>
 							<span>Signout</span>
-							<span class="pull-right-container">
-								<span class="label label-default pull-right">4</span>
-							</span>
 						</a>
 					</li>
 				</ul>

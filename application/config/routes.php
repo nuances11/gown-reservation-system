@@ -1,6 +1,10 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
+$route['cmlogin']['GET'] = 'users/login';
+$route['users/signin']['POST'] = 'users/user_login';
+$route['users/logout']['POST'] = 'users/logout';
+
 // USERS Routes
 $route['users']['GET'] = 'users';
 $route['users/datatable']['GET'] = 'users/datatable';
@@ -15,6 +19,7 @@ $route['categories/datatable']['GET'] = 'categories/datatable';
 $route['categories/save']['POST'] = 'categories/save';
 $route['categories/edit']['GET'] = 'categories/edit';
 $route['categories/update']['POST'] = 'categories/update';
+$route['categories/delete']['POST'] = 'categories/delete';
 
 // PRODUCTS
 $route['products']['GET'] = 'products';
@@ -22,6 +27,7 @@ $route['products/datatable']['GET'] = 'products/datatable';
 $route['products/save']['POST'] = 'products/save';
 $route['products/edit']['GET'] = 'products/edit';
 $route['products/update']['POST'] = 'products/update';
+$route['products/delete']['POST'] = 'products/delete';
 
 // PACKAGES
 $route['packages']['GET'] = 'packages';
@@ -35,7 +41,7 @@ $route['transactions']['GET'] = 'transactions';
 $route['transactions/datatable']['GET'] = 'transactions/datatable';
 $route['transactions/order/(:any)']['GET'] = 'transactions/order/$1';
 $route['transactions/order-print/(:any)']['GET'] = 'transactions/orderPrint/$1';
-$route['transactions/set-order/(:any)/(:num)']['GET'] = 'transactions/set_order/$1/$2';
+$route['transactions/set-order']['POST'] = 'transactions/set_order';
 
 
 // FRONTEND
@@ -55,6 +61,7 @@ $route['shop/updatecart']['POST'] = 'shop/updatecart';
 $route['shop/checkout-cart']['POST'] = 'shop/checkoutCart';
 $route['shop/search/order']['GET'] = 'shop/searchOrder';
 $route['shop/getAvailableQty']['GET'] = 'shop/getAvailableQty';
+$route['shop/packages']['GET'] = 'shop/packages';
 
 $route['sample'] = 'shop/sample';
 

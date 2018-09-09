@@ -1,5 +1,62 @@
 $(document).ready(function() {
 
+    $(document).on('submit', '#adminLogin', function(e) {
+        e.preventDefault();
+        var data = $(this).serialize();
+
+        $.ajax({
+            type: "POST",
+            url: "/users/signin",
+            data: data,
+            dataType: "json",
+            success: function(response)
+            {
+                if (response.success) {
+                    toastr.success(response.message);
+                    setTimeout(function(){ window.location.href = response.redirect_url; }, 1500);
+                }else{
+                    toastr.error(response.message);
+                }
+            }
+        });
+
+    })
+
+    $(document).on('click', '.updateOrderStatus', function() {
+        var status = $(this).data('status');
+        var id = $(this).data('id');
+
+        bootbox.confirm({ 
+            size: "small",
+            title: "Update Transction",
+            message: "Are you sure you want to update this transaction?", 
+            callback: function(result){ 
+                if (result) {
+                    $.ajax({
+                        type: "POST",
+                        url: "/transactions/set-order",
+                        data: { 
+                            id : id,
+                            order : status,
+                         },
+                        dataType: "json",
+                        success: function(response)
+                        {
+                            if (response.success) {
+                                toastr.success(response.message);
+                                setTimeout(function(){ location.reload(); }, 1500);
+                            }else{
+                                toastr.error(response.message);
+                            }
+                        }
+                    });
+                    
+                }
+            }
+          })
+        
+    })
+
     // DATA TABLES
     var usersDataTable = $('#transactions-table').DataTable({
         "ajax": {
@@ -41,8 +98,70 @@ $(document).ready(function() {
 
     })
 
-    $(document).on('click', '#printPageClose', function() {
-        window.close();
+    $(document).on('click', '.btnProductDelete', function(e) {
+        e.preventDefault();
+        var id = $(this).data('id');
+        
+        bootbox.confirm({ 
+            size: "small",
+            title: "Delete Product",
+            message: "Are you sure you want to delete this product?", 
+            callback: function(result){ 
+                if (result) {
+                 
+                    $.ajax({
+                        type: "POST",
+                        url: "products/delete",
+                        data: { id : id },
+                        dataType: "json",
+                        success: function(response)
+                        {
+                            console.log(response);
+                            if (response.success) {
+                                toastr.success(response.message);
+                                productsDataTable.ajax.reload();
+                            }else{
+                                toastr.error(response.message);
+                            }
+                        }
+                    });
+                    
+                }
+            }
+          })
+    })
+
+    $(document).on('click', '.btnCategoryDelete', function(e) {
+        e.preventDefault();
+        var id = $(this).data('id');
+        
+        bootbox.confirm({ 
+            size: "small",
+            title: "Delete Category",
+            message: "Are you sure you want to delete this category?", 
+            callback: function(result){ 
+                if (result) {
+                 
+                    $.ajax({
+                        type: "POST",
+                        url: "categories/delete",
+                        data: { id : id },
+                        dataType: "json",
+                        success: function(response)
+                        {
+                            console.log(response);
+                            if (response.success) {
+                                toastr.success(response.message);
+                                categoriesDataTable.ajax.reload();
+                            }else{
+                                toastr.error(response.message);
+                            }
+                        }
+                    });
+                    
+                }
+            }
+          })
     })
 
     // Delete User Button

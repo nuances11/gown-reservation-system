@@ -51,9 +51,11 @@
                         echo '<span style="color:orange;"><strong>PENDING</strong></span>';
                     }elseif ($order->status == 1) {
                         echo '<span style="color:green;"><strong>APPROVED</strong></span>';
-                    }else {
+                    }elseif ($order->status == 2) {
                         echo '<span style="color:red;"><strong>DECLINED</strong></span>';
-                    }
+                    }elseif($order->status == 3){
+						echo '<span style="color:white;background-color:green;border-radius:10px;"><strong>COMPLETED</strong></span>';
+					}
                 ?>
             <br>
             <b>Change Status:</b>
@@ -63,19 +65,36 @@
                         echo 'PENDING';
                     }elseif ($order->status == 1) {
                         echo 'APPROVED';
-                    }else {
+                    }elseif ($order->status == 2) {
                         echo 'DECLINED';
-                    }
+                    }elseif ($order->status == 3) {
+						echo 'COMPLETED';
+					}
                 ?></button>
                 <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
                 <span class="caret"></span>
                 <span class="sr-only">Toggle Dropdown</span>
                 </button>
                 <ul class="dropdown-menu" role="menu">
-                <li><a href="<?php echo BASE_URL() .'transactions/order/pending/' . $this->uri->segment(3) ;?>">Pending</a></li>
+					<?php if ($order->status == 0) : ?>
+						<li><a href="javascript:void(0);" data-id="<?php echo $this->uri->segment(3);?>" class="updateOrderStatus" data-status="accept">Accept</a></li>
+						<li class="divider"></li>
+						<li><a href="javascript:void(0);" data-id="<?php echo $this->uri->segment(3);?>" class="updateOrderStatus" data-status="decline"><span style="color:red;">Decline</span></a></li>
+					<?php endif; ?>
+					<?php if ($order->status == 1) : ?>
+						<li><a href="javascript:void(0);" data-id="<?php echo $this->uri->segment(3);?>" class="updateOrderStatus" data-status="completed">Completed</a></li>
+					<?php endif;?>
+					
+					<!-- <li class="divider"></li>
+					<li><a href="javascript:void(0);" data-id="<?php echo $this->uri->segment(3);?>" class="updateOrderStatus" data-status="completed">Completed</a></li> -->
+					
+
+				<!-- <li><a href="<?php echo BASE_URL() .'transactions/order/pending/' . $this->uri->segment(3) ;?>">Pending</a></li>
                 <li><a href="<?php echo BASE_URL() .'transactions/order/accept/' . $this->uri->segment(3) ;?>">Accept</a></li>
+				<li class="divider"></li>
+				<li><a href="<?php echo BASE_URL() .'transactions/order/complete/' . $this->uri->segment(3) ;?>">Completed</a></li>
                 <li class="divider"></li>
-                <li><a href="<?php echo BASE_URL() .'transactions/order/decline/' . $this->uri->segment(3) ;?>"><span style="color:red;">Decline</span></a></li>
+                <li><a href="<?php echo BASE_URL() .'transactions/order/decline/' . $this->uri->segment(3) ;?>"><span style="color:red;">Decline</span></a></li> -->
                 </ul>
             </div>
 		</div>
@@ -145,6 +164,7 @@
 	<div class="row no-print">
 		<div class="col-xs-12">
             <a href="<?php echo BASE_URL() . 'transactions/order-print/' . $this->uri->segment(3) ;?>" target="_blank" id="printInvoice" class="btn btn-default"><i class="fa fa-print"></i> Print</a>
+			<a href="<?php echo BASE_URL() . 'transactions' ;?>" class="btn btn-default"> Back</a>
 		</div>
 	</div>
 </section>

@@ -1,3 +1,10 @@
+<?php
+    defined('BASEPATH') OR exit('No direct script access allowed');
+    if (isset($_SESSION['id'])) {
+        header("Location:" . BASE_URL() . "products");
+    }
+?>
+
 <!doctype html>
 <html class="no-js" lang="">
 
@@ -126,9 +133,11 @@
                                 <div class="main-menu-area">
                                     <nav>
                                         <ul>
-                                            <li><a href="<?php echo BASE_URL();?>shop">Home</a></li>
-                                            <li><a href="<?php echo BASE_URL();?>shop/about">About</a></li>
-                                            <li><a href="<?php echo BASE_URL();?>shop/contact">Contact</a></li>
+                                        <li><a href="<?php echo BASE_URL();?>shop">Home</a></li>
+                                            <li><a href="<?php echo BASE_URL();?>shop/ordersearch">Order Search</a></li>
+                                            <li><a href="<?php echo BASE_URL();?>shop/packages">Packages</a></li>
+                                            <!-- <li><a href="<?php echo BASE_URL();?>shop/about">About</a></li>
+                                            <li><a href="<?php echo BASE_URL();?>shop/contact">Contact</a></li> -->
                                         </ul>
                                     </nav>
                                 </div>
@@ -144,8 +153,10 @@
                                         <nav id="dropdown">
                                             <ul>
                                             <li><a href="<?php echo BASE_URL();?>shop">Home</a></li>
-                                            <li><a href="<?php echo BASE_URL();?>shop/about">About</a></li>
-                                            <li><a href="<?php echo BASE_URL();?>shop/contact">Contact</a></li>
+                                            <li><a href="<?php echo BASE_URL();?>shop/ordersearch">Order Search</a></li>
+                                            <li><a href="<?php echo BASE_URL();?>shop/packages">Packages</a></li>
+                                            <!-- <li><a href="<?php echo BASE_URL();?>shop/about">About</a></li>
+                                            <li><a href="<?php echo BASE_URL();?>shop/contact">Contact</a></li> -->
                                             </ul>
                                         </nav>
                                     </div>

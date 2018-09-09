@@ -37,6 +37,18 @@ class Packages_Model extends CI_Model
         
     }
 
+    function getAllPackages()
+    {
+        $this->db->select('*')
+                ->from('package')
+                ->where('is_available', 1);
+        $query = $this->db->get();
+        if($query->num_rows()){
+            return $query->result();
+        }
+        return [];
+    }
+
 
 }
 

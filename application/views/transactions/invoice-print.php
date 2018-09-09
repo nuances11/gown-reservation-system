@@ -33,9 +33,11 @@
                         echo '<span style="color:orange;"><strong>PENDING</strong></span>';
                     }elseif ($order->status == 1) {
                         echo '<span style="color:green;"><strong>APPROVED</strong></span>';
-                    }else {
+                    }elseif ($order->status == 2) {
                         echo '<span style="color:red;"><strong>DECLINED</strong></span>';
-                    }
+                    }elseif($order->status == 3){
+						echo '<span style="color:white;background-color:green;border-radius:10px;"><strong>COMPLETED</strong></span>';
+					}
                 ?>
             <br>
 		</div>

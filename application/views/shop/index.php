@@ -101,8 +101,10 @@
                                                 </h3>
                                                 <span>Php <?php echo number_format($product->price,2);?></span>
                                                 <p><?php echo $product->description ;?></p>
+                                                <p><strong>CATEGORY: </strong><?php echo $product->cat_name ;?></p>
+										        <p><strong>SIZE: </strong><?php echo $product->size_name ;?></p>
                                             </div>
-                                            <ul class="product-box2-cart">
+                                            <ul class="product-box2-cart" style="margin-top: 30px;">
                                                 <li>
                                                     <a class="product_add_to_cart" data-id="<?php echo $product->id ;?>" href="javascript:void(0);">Add To Cart</a>
                                                 </li>

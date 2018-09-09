@@ -58,7 +58,8 @@ class Transactions_Model extends CI_Model
         // Get All transactions
         $this->db->select('*')
                 ->from('transactions')
-                ->where('status', 0);
+                ->where('status', 0)
+                ->or_where('status', 1);
         $tr = $this->db->get();
 
         // Get Transaction details for each transactions
@@ -194,17 +195,145 @@ class Transactions_Model extends CI_Model
         return [];
     }
 
-    public function set_order($order = NULL)
+    public function set_order($order = NULL, $id)
     {
         if ($order != NULL) {
             
+            $update_transactions = FALSE;
+
             switch ($order) {
                 case 'pending':
-                    
+
+                    $this->db->set('status', 0);
+                    $this->db->where('transaction_no' , $id);
+                    $result_update = $this->db->update('transactions');
+
+                    if ($result_update) {
+                        // UPDATE Product Quantity
+                        $this->db->select('*')
+                                ->from('transactions')
+                                ->where('transaction_no', $id);
+                        $query = $this->db->get();
+                        if($query->num_rows()){
+                            $result = $query->row();
+
+                            $this->db->select('*')
+                                ->from('transaction_details')
+                                ->where('transaction_no', $result->transaction_no);
+                            $resDetails = $this->db->get();
+
+                            if($resDetails->num_rows()){
+
+                                foreach ($resDetails->result() as $details) {
+                                    $this->db->set('qty', 'qty-' . $details->qty, false);
+                                    $this->db->where('id' , $details->product_id);
+                                    $update_transactions = $this->db->update('products');
+                                }
+
+                            }
+                        }
+                    }
+                    return $update_transactions;
                     break;
-                
-                default:
-                    # code...
+                case 'accept':
+
+                    $this->db->set('status', 1);
+                    $this->db->where('transaction_no' , $id);
+                    $result_update = $this->db->update('transactions');
+
+                    if ($result_update) {
+                        // UPDATE Product Quantity
+                        $this->db->select('*')
+                                ->from('transactions')
+                                ->where('transaction_no', $id);
+                        $query = $this->db->get();
+                        if($query->num_rows()){
+                            $result = $query->row();
+
+                            $this->db->select('*')
+                                ->from('transaction_details')
+                                ->where('transaction_no', $result->transaction_no);
+                            $resDetails = $this->db->get();
+
+                            if($resDetails->num_rows()){
+
+                                foreach ($resDetails->result() as $details) {
+                                    $this->db->set('qty', 'qty-' . $details->qty, false);
+                                    $this->db->where('id' , $details->product_id);
+                                    $update_transactions = $this->db->update('products');
+                                }
+
+                            }
+                        }
+                    }
+                    return $update_transactions;
+                    break;
+                case 'decline':
+
+                    $this->db->set('status', 2);
+                    $this->db->where('transaction_no' , $id);
+                    $result_update = $this->db->update('transactions');
+
+                    if ($result_update) {
+                        // UPDATE Product Quantity
+                        $this->db->select('*')
+                                ->from('transactions')
+                                ->where('transaction_no', $id);
+                        $query = $this->db->get();
+                        if($query->num_rows()){
+                            $result = $query->row();
+
+                            $this->db->select('*')
+                                ->from('transaction_details')
+                                ->where('transaction_no', $result->transaction_no);
+                            $resDetails = $this->db->get();
+
+                            if($resDetails->num_rows()){
+
+                                foreach ($resDetails->result() as $details) {
+                                    $this->db->set('qty', 'qty+' . $details->qty, false);
+                                    $this->db->where('id' , $details->product_id);
+                                    $update_transactions = $this->db->update('products');
+                                }
+
+                            }
+                        }
+                    }
+
+                    return $update_transactions;
+                    break;
+                case 'completed':
+
+                    $this->db->set('status', 3);
+                    $this->db->where('transaction_no' , $id);
+                    $result_update = $this->db->update('transactions');
+
+                    if ($result_update) {
+                        // UPDATE Product Quantity
+                        $this->db->select('*')
+                                ->from('transactions')
+                                ->where('transaction_no', $id);
+                        $query = $this->db->get();
+                        if($query->num_rows()){
+                            $result = $query->row();
+
+                            $this->db->select('*')
+                                ->from('transaction_details')
+                                ->where('transaction_no', $result->transaction_no);
+                            $resDetails = $this->db->get();
+
+                            if($resDetails->num_rows()){
+
+                                foreach ($resDetails->result() as $details) {
+                                    $this->db->set('qty', 'qty+' . $details->qty, false);
+                                    $this->db->where('id' , $details->product_id);
+                                    $update_transactions = $this->db->update('products');
+                                }
+
+                            }
+                        }
+                    }
+                    return $update_transactions;
                     break;
             }
 
