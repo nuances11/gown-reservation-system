@@ -29,8 +29,13 @@
 				<!-- form start -->
 				<form role="form" id="edit-package">
                 <div class="box-body">
-						<div id="err"></div>
+						<div class="form-group">
+							<label for="package_img">Package Image</label>
+							<input id="package_img" name="package_img" type="file">
+						</div>
+						<div class="image-container"></div>
 						<input type="hidden" name="package_id">
+						<input type="hidden" name="image_file">
 						<div class="form-group">
 							<label for="name">Name</label>
 							<input class="form-control" placeholder="Enter name" name="name" type="text">
@@ -40,8 +45,8 @@
 							<input class="form-control" placeholder="Enter price" name="price" type="number">
 						</div>
                         <div class="form-group">
-							<label for="name">Number of Item</label>
-							<input class="form-control" placeholder="0" name="number_of_items" type="text">
+							<label>Description</label>
+							<textarea class="form-control" name="package_description" rows="3" placeholder="Enter ..."></textarea>
 						</div>
                         
 						<div class="form-group">
@@ -74,6 +79,10 @@
                 <div class="box-body">
 						<div id="err"></div>
 						<div class="form-group">
+							<label for="package_img">Package Image</label>
+							<input id="package_img" name="package_img" type="file">
+						</div>
+						<div class="form-group">
 							<label for="name">Name</label>
 							<input class="form-control" placeholder="Enter name" name="name" type="text">
 						</div>
@@ -82,8 +91,8 @@
 							<input class="form-control" placeholder="Enter price" name="price" type="number">
 						</div>
                         <div class="form-group">
-							<label for="name">Number of Item</label>
-							<input class="form-control" placeholder="0" name="number_of_items" type="text">
+							<label>Description</label>
+							<textarea class="form-control" name="package_description" rows="3" placeholder="Enter ..."></textarea>
 						</div>
                         <div class="form-group">
 							<div class="checkbox">
@@ -119,7 +128,7 @@
 							<tr>
 								<th width="15%">ID</th>
 								<th>Name</th>
-								<th>Number of items</th>
+								<th>Description</th>
 								<th width="20%">Price</th>
 								<th width="20%"></th>
 							</tr>

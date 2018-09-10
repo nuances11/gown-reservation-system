@@ -159,6 +159,7 @@ class Shop extends CI_Controller {
 							'price' => $items['price'],
 							'subtotal' => $items['subtotal'],
 							'res_date' => $items['option']['date'],
+							'product_type' => $items['option']['type'],
 						);
 
 						$saveTrans = $this->transactions_model->saveTransactionDetails($itemInfo);
@@ -207,33 +208,66 @@ class Shop extends CI_Controller {
 		$response = array();
 		$id = $this->input->post('id');
 		$date = $this->input->post('date');
+		$type = $this->input->post('type');
 		$qty = ($this->input->post('qty')) ? $this->input->post('qty') : 1 ;
 
-		$product = $this->products_model->getProductInfo($id);
+		if($type == 'product'){
+			$product = $this->products_model->getProductInfo($id);
 
-		if ($product) {
-			$data = array(
-				'id' => $product->id,
-				'qty' => $qty,
-				'price' => $product->price,
-				'name' => $product->name . '-' . $product->size_name,
-				'option' => array(
-					'size' => $product->size_id,
-					'date' => $date,
-				)
-			);
+			if ($product) {
+				$data = array(
+					'id' => $product->id,
+					'qty' => $qty,
+					'price' => $product->price,
+					'name' => $product->name . '-' . $product->size_name,
+					'option' => array(
+						'size' => $product->size_id,
+						'date' => $date,
+						'type' => $type,
+					)
+				);
 
-			$result = $this->cart->insert($data);
-			if ($result) {
-				$response['success'] = TRUE;
-				$response['message'] = $product->name . ' added to cart.';
+				$result = $this->cart->insert($data);
+				if ($result) {
+					$response['success'] = TRUE;
+					$response['message'] = $product->name . ' added to cart.';
+				}else{
+					$response['success'] = FALSE;
+					$response['message'] = 'Error adding product to cart';
+				}
 			}else{
 				$response['success'] = FALSE;
-				$response['message'] = 'Error adding product to cart';
+				$response['message'] = 'Product not found. Error on adding to cart';
 			}
-		}else{
-			$response['success'] = FALSE;
-			$response['message'] = 'Product not found. Error on adding to cart';
+		}else if($type == 'package'){
+
+			$package = $this->packages_model->getPackageInfo($id);
+
+			if ($package) {
+				$data = array(
+					'id' => $package->package_number,
+					'qty' => $qty,
+					'price' => $package->price,
+					'name' => $package->name,
+					'option' => array(
+						'date' => $date,
+						'type' => $type,
+					)
+				);
+
+				$result = $this->cart->insert($data);
+				if ($result) {
+					$response['success'] = TRUE;
+					$response['message'] = $package->name . ' added to cart.';
+				}else{
+					$response['success'] = FALSE;
+					$response['message'] = 'Error adding product to cart';
+				}
+			}else{
+				$response['success'] = FALSE;
+				$response['message'] = 'Product not found. Error on adding to cart';
+			}
+
 		}
 
 		echo json_encode($response);

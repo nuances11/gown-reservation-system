@@ -78,7 +78,7 @@
 						</span>
 					</h3>
 					<div class="proceed-button">
-						<button class="btn-apply-coupon disabled" type="submit" value="Login">Proceed To Checkout</button>
+						<a class="btn-apply-coupon disabled" href="<?php echo BASE_URL() . 'shop/checkout';?>">Proceed To Checkout</a>
 					</div>
 				</div>
 			</div>

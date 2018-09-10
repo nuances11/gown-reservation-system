@@ -35,6 +35,7 @@ $route['packages/datatable']['GET'] = 'packages/datatable';
 $route['packages/save']['POST'] = 'packages/save';
 $route['packages/edit']['GET'] = 'packages/edit';
 $route['packages/update']['POST'] = 'packages/update';
+$route['packages/delete']['POST'] = 'packages/delete';
 
 // TRANSACTIONS
 $route['transactions']['GET'] = 'transactions';

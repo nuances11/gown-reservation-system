@@ -105,6 +105,7 @@
 	<!-- Table row -->
 	<div class="row">
 		<div class="col-xs-12 table-responsive">
+			<h3>Product</h3>
 			<table class="table table-striped">
 				<thead>
 					<tr>
@@ -117,7 +118,7 @@
 				</thead>
 				<tbody>
                     <?php $total = 0; ?>
-                    <?php foreach ($order->transDetails as $trans) : ?>
+                    <?php foreach ($order->productDetails as $trans) : ?>
                     <?php $total += $trans->subtotal ;?>
                     <tr>
                         <td><?php echo $trans->id ;?></td>
@@ -131,6 +132,36 @@
 				</tbody>
 			</table>
 		</div>
+		<?php if($order->packageDetails) :?>
+			<div class="col-xs-12 table-responsive">
+				<h3>Package</h3>
+				<table class="table table-striped">
+					<thead>
+						<tr>
+							<th>ID</th>
+							<th>Qty</th>
+							<th>Product</th>
+							<th>Res Date</th>
+							<th>Subtotal</th>
+						</tr>
+					</thead>
+					<tbody>
+						<?php $packagetotal = 0; ?>
+						<?php foreach ($order->packageDetails as $package) : ?>
+						<?php $packagetotal += $package->subtotal ;?>
+						<tr>
+							<td><?php echo $package->id ;?></td>
+							<td><?php echo $package->qty ;?></td>
+							<td><?php echo $package->name ;?></td>
+							<td><?php echo $package->res_date ;?></td>
+							<td><?php echo 'PHP ' . number_format($package->subtotal, 2) ;?></td>
+						</tr>
+						
+						<?php endforeach;?>
+					</tbody>
+				</table>
+			</div>
+		<?php endif;?>
 		<!-- /.col -->
 	</div>
 	<!-- /.row -->
@@ -151,7 +182,8 @@
 				<table class="table">
 					<tr>
 						<th>Total:</th>
-						<td><strong><?php echo 'PHP ' . number_format($total, 2) ;?></strong></td>
+						<?php $grandTotal = $total + $packagetotal ;?>
+						<td><strong><?php echo 'PHP ' . number_format($grandTotal, 2) ;?></strong></td>
 					</tr>
 				</table>
 			</div>

@@ -135,15 +135,6 @@ class Products extends CI_Controller {
             $uploadOk = 1;
             $imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
                 
-            // // Check if image file is a actual image or fake image
-            // $check = getimagesize($_FILES["product_img"]["tmp_name"]);
-            // if($check !== false) {
-            //     $response['image_size'] = "File is an image - " . $check["mime"];
-            //     $uploadOk = 1;
-            // } else {
-            //     $response['image_size'] = "File is not an image.";
-            //     $uploadOk = 0;
-            // }
 
             // Check file size
             if ($_FILES["product_img"]["size"] > 5000000) {

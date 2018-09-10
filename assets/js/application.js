@@ -131,6 +131,39 @@ $(document).ready(function() {
           })
     })
 
+    $(document).on('click', '.btnPackageDelete', function(e) {
+        e.preventDefault();
+        var id = $(this).data('id');
+        
+        bootbox.confirm({ 
+            size: "small",
+            title: "Delete Package",
+            message: "Are you sure you want to delete this package?", 
+            callback: function(result){ 
+                if (result) {
+                 
+                    $.ajax({
+                        type: "POST",
+                        url: "packages/delete",
+                        data: { id : id },
+                        dataType: "json",
+                        success: function(response)
+                        {
+                            console.log(response);
+                            if (response.success) {
+                                toastr.success(response.message);
+                                packagesDataTable.ajax.reload();
+                            }else{
+                                toastr.error(response.message);
+                            }
+                        }
+                    });
+                    
+                }
+            }
+          })
+    })
+
     $(document).on('click', '.btnCategoryDelete', function(e) {
         e.preventDefault();
         var id = $(this).data('id');
@@ -275,7 +308,16 @@ $(document).ready(function() {
                     $('#edit-package input[name=package_id]').val(response.package.id);
                     $('#edit-package input[name=name]').val(response.package.name);
                     $('#edit-package input[name=price]').val(response.package.price);
-                    $('#edit-package input[name=number_of_items]').val(response.package.dress_count);
+                    $('#edit-package textarea[name=package_description]').val(response.package.package_description);
+                    if (response.package.is_available) {
+                        $('#edit-package input[type=checkbox][name=is_available]').prop('checked', true);
+                    }
+                    if(response.package.image){
+                        $('.image-container').html('<img src="uploads/img/packages/' + response.package.image + '" class="img-responsive">');
+                        $('#edit-package input[name=image_file]').val(response.package.image);
+                    }else{
+                        $('#edit-package .image-container').html('');
+                    }
 
                 }else{
                     toastr.error(response.message);
@@ -358,7 +400,8 @@ $(document).ready(function() {
     // FORMS
     $('#add-package').on('submit', function(e) {
         e.preventDefault();
-        var data = $(this).serialize();
+        // var data = $(this).serialize();
+        var data = new FormData(this);
         var errors = "";
 
         bootbox.confirm({ 
@@ -373,19 +416,20 @@ $(document).ready(function() {
                         url: "packages/save",
                         data: data,
                         dataType: "json",
+                        contentType: false,
+                        processData: false,
                         success: function(response)
                         {
                             console.log(response);
                             if (response.success) {
                                 toastr.success(response.message);
-                                // Clear all input on the Add user Form
-                                $('#add-user').find('input:text, input:password, select, textarea').val('');
-                                $('#add-user').find('input:radio, input:checkbox').prop('checked', false);
-                                packagesDataTable.ajax.reload(); // Reload Users DataTable
+                                $('#add-package')[0].reset();
+                                packagesDataTable.ajax.reload(); // Reload Packages DataTable
                             }else{
                                 if (response.validation_errors) {
-                                    console.log(response.validation_errors);
                                     toastr.error(response.validation_errors);
+                                }else if(response.package_image){
+                                    toastr.error(response.package_image);
                                 }else{
                                     toastr.error(response.message);
                                 }
@@ -400,7 +444,8 @@ $(document).ready(function() {
 
     $('#edit-package').on('submit', function(e) {
         e.preventDefault();
-        var data = $(this).serialize();
+        // var data = $(this).serialize();
+        var data = new FormData(this);
 
         bootbox.confirm({ 
             size: "small",
@@ -414,14 +459,15 @@ $(document).ready(function() {
                         url: "packages/update",
                         data: data,
                         dataType: "json",
+                        contentType: false,
+                        processData: false,
                         success: function(response)
                         {
                             console.log(response);
                             if (response.success) {
                                 toastr.success(response.message);
-                                // Clear all input on the Add user Form
-                                $('#edit-package').find('input:text, input:password, select, textarea').val('');
-                                $('#edit-package').find('input:radio, input:checkbox').prop('checked', false);
+                                $('#edit-package .image-container').html('');
+                                $('#edit-package')[0].reset();
                                 packagesDataTable.ajax.reload(); // Reload Users DataTable
                             }else{
                                 if (response.validation_errors) {

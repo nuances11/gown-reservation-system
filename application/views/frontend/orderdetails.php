@@ -2,7 +2,7 @@
     <?php
         $total = 0;
 
-        foreach ($transaction->transDetails as $item) {
+        foreach ($transaction->productDetails as $item) {
             $total += $item->subtotal;
         }
 
@@ -44,7 +44,7 @@
 							</tr>
 						</thead>
 						<tbody>
-                            <?php foreach ($transaction->transDetails as $item) : ?>
+                            <?php foreach ($transaction->productDetails as $item) : ?>
                                 <tr>
                                     <td><?php echo $item->tdqty; ?> X <?php echo $item->name; ?></td>
                                     <td>PHP <?php echo number_format($item->price,2); ?></td>
@@ -57,6 +57,33 @@
 						</tbody>
 					</table>
 				</div>
+
+				<?php if($transaction->packageDetails) : ?>
+					<div class="order-details-page-top table-responsive">
+						<table class="table table-hover">
+							<thead>
+								<tr>
+									<td class="order-details-form-heading">Package</td>
+									<td class="order-details-form-heading">Total</td>
+								</tr>
+							</thead>
+							<tbody>
+								<?php $packageTotal = 0 ;?>
+								<?php foreach ($transaction->packageDetails as $package) : ?>
+								<?php  $packageTotal += $package->subtotal; ;?>
+									<tr>
+										<td><?php echo $package->tdqty; ?> X <?php echo $package->name; ?></td>
+										<td>PHP <?php echo number_format($package->price,2); ?></td>
+									</tr>
+								<?php endforeach;?>							
+								<tr>
+									<td><strong>TOTAL</strong></td>
+									<td><strong>PHP <?php echo number_format($packageTotal,2); ?></strong></td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				<?php endif;?>
 			</div>
 		</div>
 		<div class="row">

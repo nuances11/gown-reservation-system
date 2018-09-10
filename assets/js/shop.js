@@ -245,6 +245,15 @@ $(document).ready(function() {
 
     $('.inner-product-details-cart').hide();
 
+    $( "#packagedatepicker" ).datepicker({
+        minDate: dateToday,
+        onSelect: function(dateText, inst) {
+            var id = inst.input.context.dataset.id;
+            // var id = $(this).data('id');
+            $('.inner-product-details-cart').show();
+            
+        }
+    });
     
     $( ".datepicker" ).datepicker({
         minDate: dateToday,
@@ -376,6 +385,7 @@ $(document).ready(function() {
         var id = $('.productDetailsModal .quantity-input').data('id');
         var date = $('.productDetailsModal .quantity-input').data('date');
         var inputQty = $('.productDetailsModal .quantity-input').val();
+        var type = 'product';
         var r = confirm("Are you sure you want to add this product to cart?");
 
         if (r == true) {
@@ -392,6 +402,7 @@ $(document).ready(function() {
                         id : id,
                         qty : inputQty,
                         date : date,
+                        type : type,
                     },
                     dataType: "json",
                     success: function(response)
@@ -399,6 +410,86 @@ $(document).ready(function() {
                         if (response.success) {
                             alert(response.message);
                             $('.productDetailsModal').modal('toggle'); 
+                            updateCartCount();
+                        }else{
+                            alert(response.message);
+                        }
+                    }
+                });
+
+            }
+
+        }
+    })
+
+    $(document).on('click', '.addPackageToCart', function(e) {
+        e.preventDefault();
+
+        var id = $(this).data('id');
+        
+        var imgSrc = ''
+        $('.packageDetailsModal').attr('data-id', id);
+        $('.packageDetailsModal').modal('show');
+
+        $.ajax({
+            type: "GET",
+            url: "/packages/edit",
+            data: { id : id },
+            dataType: "json",
+            success: function(response)
+            {
+                console.log(response);
+                if (response.success) {
+                    
+                    var price = accounting.formatMoney(response.package.price, "PHP ", 2, ",", ".");
+                    if(response.package.image){
+                        imgSrc = '/uploads/img/packages/' + response.package.image;
+                    }else{
+                        imgSrc = '/assets/img/1.png';
+                    }
+                    $('.packageDetailsModal .product-img').attr('src', imgSrc);
+                    $('.packageDetailsModal #packagedatepicker').attr('data-id', response.package.id);
+                    $('.packageDetailsModal #product-title').html(response.package.name);
+                    $('.packageDetailsModal .price').html(price);
+                    $('.packageDetailsModal .description').html(response.package.package_description);
+                    // $('.packageDetailsModal .category').html('<span>Category:</span> ' + response.package.catname);
+                    // $('.packageDetailsModal .size').html('<span>Size:</span> ' + response.package.size_name);
+                }
+                
+            }
+        });
+    })
+
+    $(document).on('click', '#addToCartPackage', function(e) {
+        var availableQty = $('.packageDetailsModal .quantity-input').data('qty');
+        var id = $('.packageDetailsModal').data('id');
+        var date = $('.packageDetailsModal #packagedatepicker').val();
+        var inputQty = $('.packageDetailsModal .quantity-input').val();
+        var type = 'package';
+        var r = confirm("Are you sure you want to add this product to cart?");
+
+        if (r == true) {
+
+            if (availableQty < inputQty) {
+                alert('Input quantity is greater than the available product quantity.');
+                return;
+            }else{
+                
+                $.ajax({
+                    type: "POST",
+                    url: "/shop/add",
+                    data: { 
+                        id : id,
+                        qty : inputQty,
+                        date : date,
+                        type : type,
+                    },
+                    dataType: "json",
+                    success: function(response)
+                    {
+                        if (response.success) {
+                            alert(response.message);
+                            $('.packageDetailsModal').modal('toggle'); 
                             updateCartCount();
                         }else{
                             alert(response.message);

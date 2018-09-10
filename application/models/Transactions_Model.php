@@ -163,7 +163,15 @@ class Transactions_Model extends CI_Model
                     ->where('transaction_no', $id);
                 $trans_details = $this->db->get();
                 $_trans_details = $trans_details->result();
-                $item->transDetails = $_trans_details;
+                $item->productDetails = $_trans_details;
+
+                $this->db->select('td.*, td.qty as tdqty, pckg.*')
+                    ->from('transaction_details as td')
+                    ->join('package as pckg', 'pckg.package_number = td.product_id')
+                    ->where('transaction_no', $id);
+                $package_details = $this->db->get();
+                $_package_details = $package_details->result();
+                $item->packageDetails = $_package_details;
             }
 
             return $trans->row();
