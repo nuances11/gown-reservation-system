@@ -128,7 +128,7 @@ class Transactions extends CI_Controller {
 
     public function orderPrint($id)
     {
-      $this->template->set_title('Admin - ORDER #' . $id . 'PRINT');
+      $this->template->set_title('Admin - ORDER #' . $id . ' - PRINT');
       $this->template->set_template('print');
       $this->template->load_sub('order', $this->transactions_model->getTransactionDetails($id));
       $this->template->load('transactions/invoice-print');

@@ -125,8 +125,12 @@
 				<table class="table">
 					<tr>
 						<th>Total:</th>
-						<?php $grandTotal = $total + $packagetotal ;?>
-						<td><strong><?php echo 'PHP ' . number_format($grandTotal, 2) ;?></strong></td>
+						<?php if($order->packageDetails) :?>
+							<?php $grandTotal = $total + $packagetotal ;?>
+							<td><strong><?php echo 'PHP ' . number_format($grandTotal, 2) ;?></strong></td>
+						<?php else: ?>
+							<td><strong><?php echo 'PHP ' . number_format($total, 2) ;?></strong></td>
+						<?php endif;?>
 					</tr>
 				</table>
 			</div>
