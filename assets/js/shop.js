@@ -273,7 +273,7 @@ $(document).ready(function() {
                 success: function(response)
                 {
                     if (response.success) {
-
+                        console.log('Quantity : ' + response.availableQty);
                         if (response.availableQty > 0) {
                             $('.product_qty').html('<span>QTY : </span>' + response.availableQty);
                             $('.productDetailsModal .quantity-input').attr('data-qty', response.availableQty);
@@ -289,6 +289,8 @@ $(document).ready(function() {
                             $('.out-of-stock-alert').show();
                         }
                         
+                    }else{
+                        $('.out-of-stock-alert').show();
                     }
                 }
             });

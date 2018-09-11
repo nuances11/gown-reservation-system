@@ -169,11 +169,6 @@
 	<div class="row">
 		<!-- accepted payments column -->
 		<div class="col-xs-6">
-
-			<p class="text-muted well well-sm no-shadow" style="margin-top: 10px;">
-				Etsy doostang zoodles disqus groupon greplin oooj voxy zoodles, weebly ning heekya handango imeem plugg
-				dopplr jibjab, movity jajah plickers sifteo edmodo ifttt zimbra.
-			</p>
 		</div>
 		<!-- /.col -->
 		<div class="col-xs-6">
