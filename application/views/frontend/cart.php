@@ -29,19 +29,23 @@
 								<td class="amount">PHP
 									<?php echo number_format($items['price'],2) ;?>
 								</td>
-								<td class="quantity">
-									<div class="input-group quantity-holder">
-										<input type="text" name="quantity" class="form-control quantity-input" value="<?php echo $items['qty'];?>" placeholder="1">
-										<div class="input-group-btn-vertical">
-											<button class="btn btn-default quantity-plus update-item" data-row-id="<?php echo $items['rowid'];?>" data-qty="<?php echo $items['qty'];?>" type="button">
-												<i class="fa fa-plus" aria-hidden="true"></i>
-											</button>
-											<button class="btn btn-default quantity-minus update-item" data-row-id="<?php echo $items['rowid'];?>" data-qty="<?php echo $items['qty'];?>" type="button">
-												<i class="fa fa-minus" aria-hidden="true"></i>
-											</button>
-										</div>
+								<td class="quantity" style="text-align:center;">
+									<?php if($items['option']['type'] == 'product') : ?>
+										<div class="input-group quantity-holder">
+											<input type="text" name="quantity" class="form-control quantity-input" value="<?php echo $items['qty'];?>" placeholder="1">
+											<div class="input-group-btn-vertical">
+												<button class="btn btn-default quantity-plus update-item" data-row-id="<?php echo $items['rowid'];?>" data-qty="<?php echo $items['qty'];?>" type="button">
+													<i class="fa fa-plus" aria-hidden="true"></i>
+												</button>
+												<button class="btn btn-default quantity-minus update-item" data-row-id="<?php echo $items['rowid'];?>" data-qty="<?php echo $items['qty'];?>" type="button">
+													<i class="fa fa-minus" aria-hidden="true"></i>
+												</button>
+											</div>
 
-									</div>
+										</div>	
+									<?php else : ?>
+										<?php echo $items['qty'];?>
+									<?php endif ;?>
 								</td>
 								<td class="amount">
 								    <?php echo $this->cart->format_number($items['subtotal']); ?>

@@ -36,7 +36,7 @@
                                 <ul class="inner-product-details-cart">
                                     <li><a href="javascript:void(0);" id="addToCartPackage">Add To Cart</a></li>
                                     <li>
-                                        <div class="input-group quantity-holder" id="quantity-holder">
+                                        <div class="input-group quantity-holder" id="quantity-holder" style="display:none;">
                                             <input type="text" placeholder="1" value="1" class="form-control quantity-input" name="quantity">
                                             <div class="input-group-btn-vertical">
                                                 <button type="button" class="btn btn-default quantity-plus"><i aria-hidden="true" class="fa fa-plus"></i></button>
